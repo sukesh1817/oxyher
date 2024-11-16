@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<meta charset="utf-8">
+<title>Oxyher - Checkout</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="Free HTML Templates" name="keywords">
+<meta content="Free HTML Templates" name="description">
+<link href='{{ url_for("static", filename="img/favicon.ico")}}' rel="icon">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+  rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href='{{ url_for("static", filename="lib/owlcarousel/assets/owl.carousel.min.css")}}' rel="stylesheet">
+<link href='{{ url_for("static", filename="css/style.css")}}' rel="stylesheet">
+<style>
+  .disabled-link {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+</style>
+
+</head>
+{% endblock %}
+
+
+
+{% block body %}
+
+{% include 'themes/customer/common/navbar.html' %}
+
+<hr>
+
+
+
+
+<div class="container-fluid pt-5">
+  <div class="row px-xl-5">
+    <div class="col-lg-8">
+      <div class="row g-3 align-items-stretch">
+
+        <div class="col-lg-6 col-md-6 col-sm-12 mt-1">
+          <div class="card h-100 {% if pincode_error %}border border-danger{% endif %}">
+            <!-- Conditional border-danger -->
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Your address</h5>
+              {% if user_addr == "NOT_GIVEN" %}
+              <small class="text-danger">Please provide the address.</small>
+              {% elif pincode_error %}
+              <small class="text-danger">Pincode is not deliverable.</small>
+              {% endif %}
+              <p class="card-text">
+                {% if user_addr == "NOT_GIVEN" %}
+                {{ "Fill your address before shipping." }}
+                {% else %}
+                {{ user_addr }}
+                {% endif %}
+              </p>
+              <div class="mt-auto">
+                <a href="{{ url_for('profile.edit_profile') }}" class="btn btn-primary text-white custom-br">Change
+                  address</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 mt-1">
+          <div class="card h-100 {% if not user_data[3] %}border border-danger{% endif %}">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Customer information</h5>
+              <p class="card-text">
+                {{ user_data[1] }} <br>
+                {{ user_data[0] }} <br>
+                {% if user_data[3] %}
+                {{ user_data[3] }}
+                {% else %}
+                <small class="text-danger">Fill your phonenumber.</small>
+                {% endif %}
+              </p>
+              <div class="mt-auto">
+                <a href="{{ url_for('profile.edit_profile') }}" class="btn btn-primary text-white custom-br">Change
+                  customer info</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4">
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card border-secondary mb-1">
+        <div class="card-header bg-secondary border-0">
+          <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+        </div>
+        <div class="card-body">
+          {% set ns = namespace(items=0) %}
+          {% for product in products %}
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <!-- Product Name and Quantity -->
+            <p class="m-0" style="font-size: 0.9rem; color: #333; font-weight: 500;">
+              {{ product['display_name'] }}
+              <span style="color: #555; font-weight: 400;">x</span>
+              <b style="color: #333;">{{ product['qty'] }}</b>
+            </p>
+
+            <!-- Product Price -->
+            <p class="m-0" style="font-size: 0.9rem; color:rgb(255, 111, 145); font-weight: 600;">
+              {{ product['final_price'] | int }} Rs
+            </p>
+
+            {% set ns.items = ns.items + product['final_price'] %}
+          </div>
+          {% endfor %}
+
+
+          <hr class="">
+          <div class="d-flex justify-content-between mb-3 pt-1">
+            <h6 class="font-weight-medium">Subtotal</h6>
+            <h6 class="font-weight-medium">{{ ns.items | int }} Rs</h6>
+          </div>
+          <!-- <div class="d-flex justify-content-between">
+            <h6 class="font-weight-medium">Shipping</h6>
+            <h6 class="font-weight-medium">$10</h6>
+          </div> -->
+        </div>
+        <!-- <div class="card-footer border-secondary bg-transparent">
+          <div class="d-flex justify-content-between mt-2">
+            <h5 class="font-weight-bold">Total</h5>
+            <h5 class="font-weight-bold">$160</h5>
+          </div>
+        </div> -->
+        <a href="{{ url_for('shop.redirect_to_payment') }}" class="container-fluid btn btn-lg btn-primary font-weight-bold text-white rounded-bottom 
+   {% if pincode_error %}disabled-link{% endif %}">
+          Go to payment
+        </a>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+{% include 'themes/customer/common/footbar.html' %}
+
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+
+{% endblock %}
+
+
+
+{% block tail %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src='{{ url_for("static", filename="lib/easing/easing.min.js")}}'></script>
+<script src='{{ url_for("static", filename="lib/owlcarousel/owl.carousel.min.js")}}'></script>
+<script src='{{ url_for("static", filename="mail/jqBootstrapValidation.min.js")}}'></script>
+<script src='{{ url_for("static", filename="mail/contact.js")}}'></script>
+<script src='{{ url_for("static", filename="js/main.js")}}'></script>
+
+{% endblock %}

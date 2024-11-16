@@ -1,0 +1,132 @@
+body {
+    margin-top: 20px;
+    background: #f6f9fc;
+}
+
+.account-block {
+    padding: 0;
+    background-image: url(https://bootdey.com/img/Content/bg1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 4px;
+    height: 100%;
+    position: relative;
+    width: 120%;
+}
+
+.account-block .overlay {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.account-block .account-testimonial {
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    margin: 0 auto;
+    padding: 0 1.75rem;
+    bottom: 3rem;
+    left: 0;
+    right: 0;
+}
+
+.text-theme {
+    color: #5369f8 !important;
+}
+
+.btn-theme {
+    background-color: #5369f8;
+    border-color: #5369f8;
+    color: #fff;
+}
+
+.rounded-sharp {
+    border-radius: 1% !important
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: black;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    background-clip: padding-box;
+    border: 2px solid black;
+    border-radius: 1%;
+    transition: border-radius 0.3s ease, border-color 0.3s ease;
+
+}
+
+.form-input:focus {
+    border-radius: 1%;
+    /* Adjust border radius on focus */
+    /* border-color: #ff0015; */
+    /* Change border color on focus for better visibility */
+    outline: none;
+    /* Remove default outline */
+}
+
+
+.btn-voilet {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #54D2D2!important;
+    /* --bs-btn-border-color: #212529!important; */
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg:#59dbdb;
+    /* --bs-btn-hover-border-color: #373b3e; */
+    --bs-btn-focus-shadow-rgb: 66, 70, 73;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #54D2D2;
+    /* --bs-btn-active-border-color: #373b3e; */
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #6feded;
+    /* --bs-btn-disabled-border-color: #212529 */
+}
+
+.btn-darkblue {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #ff6f91!important;
+    /* --bs-btn-border-color: #212529!important; */
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg:#f97c99;
+    /* --bs-btn-hover-border-color: #373b3e; */
+    --bs-btn-focus-shadow-rgb: 66, 70, 73;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #f97c99;
+    /* --bs-btn-active-border-color: #373b3e; */
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg:  #f97c99;
+    /* --bs-btn-disabled-border-color: #212529 */
+}
+
+.gradient-text {
+    font-size: 2rem; 
+     font-weight: bold; 
+    background: linear-gradient(to right, #f9d423, #ff4e50 );
+     -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    background-clip: text; 
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+}
+.form-input {
+    margin-right: 10px; /* Adjust the space between input and SVG as needed */
+}

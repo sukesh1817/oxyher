@@ -1,0 +1,377 @@
+{% extends "base.html" %}
+
+
+
+
+
+{% block head %}
+
+<title>edit Products seller</title>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+    name='viewport' />
+<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+<link rel="stylesheet" href="/static/assets/css/ready.css">
+<link rel="stylesheet" href="/static/assets/css/demo.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
+    rel="stylesheet">
+
+<style>
+    /* Position the toast in the lower middle of the screen */
+    .toast-container {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1055;
+    }
+
+    /* Customized Toast Styles */
+    .toast {
+        background-color: #fff;
+        /* White background for cleanliness */
+        border-radius: 8px;
+        /* Rounded corners */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        /* Subtle drop shadow */
+        max-width: 300px;
+        /* Maximum width for better presentation */
+        font-family: Arial, sans-serif;
+        /* Clean font */
+    }
+
+
+
+    .toast-body {
+        font-size: 14px;
+        /* Neat font size */
+        color: #fefefe;
+        /* Dark text for body */
+        padding: 10px 15px;
+        background-color: #363232
+            /* Padding for body */
+    }
+
+    /* Close button custom style */
+    .btn-close {
+        filter: brightness(0) invert(1);
+        /* White close button */
+    }
+
+    /* Customize the timestamp text */
+    .text-muted {
+        font-size: 12px;
+        /* Smaller font for timestamp */
+        color: #ccc;
+        /* Light gray for timestamp */
+    }
+</style>
+<style>
+    .mt-man {
+        margin-top: 100px;
+    }
+</style>
+
+
+{% endblock %}
+
+{% block body %}
+
+
+
+<div class="wrapper">
+
+    {% include "themes/seller/common/navbar.html" %}
+    {% include "themes/seller/common/sidebar.html" %}
+
+
+    <div class="main-panel">
+        <div class="content">
+
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title fs-5" id="deleteModalLabel">Are you sure to delete?</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="lead">Deleting this item will permanently change the customer product section.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button id="confirmDelete" type="button" class="btn btn-primary" data-product-id="">Confirm
+                                delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <h4 class="page-title">Update your Products</h4>
+                <div class="also-do mx-1">
+                    <p>Also want to do ?</p>
+                    <a href="{{ url_for('seller.delete_products')}}" class="card-link">Delete Product</a>
+                    <a href="{{ url_for('seller.add_products')}}" class="card-link">Add new Product</a>
+                </div>
+
+                <form action="{{url_for('seller.edit_product', product_id=product[0]['product_id'])}}" method="post"
+                    enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a style="font-size: 20px; text-decoration: none;"
+                                            href="{{url_for('seller.edit_products')}}#{{ product[0]['product_id'] }}"
+                                            class="text-black">
+                                            <i class="la la-arrow-left"></i> back
+                                        </a>
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                            class="btn btn-danger btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                fill="currentColor" class="bi bi-trash mt-2" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                <path
+                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <div class="card-title mt-3">Update Your Products</div>
+
+                                    <small class="form-text text-muted">
+                                        <span class="text-danger">Warning:</span> some data may not be editable.
+                                    </small>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="product_title">Product Title <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="product_title" id="product_title"
+                                            placeholder="Enter product title" value="{{ product[0]['title'] }}"
+                                            required>
+                                        <small class="form-text text-muted">This will show as the main heading of the
+                                            product.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="product_description">Product Description <span
+                                                class="text-danger">*</span></label>
+                                        <textarea  class="form-control" name="product_description"
+                                            id="product_description" placeholder="Enter product description" rows="9"
+                                            required> {{ product[0]['description'] }} </textarea>
+                                        <small class="form-text text-muted">Provide a detailed description of the
+                                            product.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="brand_name">Brand name
+                                            <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="brand_name" id="brand_name"
+                                            placeholder="Enter brand name" value="{{ product[0]['brand'] }}" required>
+                                        <small class="form-text text-muted">Please provide the product brand
+                                            name.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="display_name">Display name
+                                            <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="display_name" id="display_name"
+                                            placeholder="Enter display name" value="{{ product[0]['display_name'] }}"
+                                            required>
+                                        <small class="form-text text-muted">Please provide the display name(<span
+                                                class="text-danger">Please provide a word with less number of
+                                                letters</span>).</small>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="product_price">Price <span class="text-danger">*</span></label>
+                                        <input type="number" name="product_price" class="form-control"
+                                            id="product_price" value="{{ product[0]['price'] }}"
+                                            placeholder="Enter product price" required>
+                                        <small class="form-text text-muted">Please provide the price of single
+                                            quanity.</small>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <input type="hidden" name="p_id" id="p_id" value="{{ product['product_id'] }}">
+                                        <label for="product_quantity">Quantity in Stock <span
+                                                class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="product_quantity"
+                                            id="product_quantity" value="{{ product[0]['quantity'] }}"
+                                            placeholder="Enter quantity" required>
+                                        <small class="form-text text-muted">Enter the quantity of stock you want to
+                                            show.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="product_images">Product Images <span
+                                                class="text-danger">*</span></label>
+                                        <input type="file" class="form-control-file" name="images" id="product_images"
+                                            multiple accept="image/*" multiple>
+                                        <small class="form-text text-muted">Multiple images allowed, image dimension
+                                            must be 600 x 600</small>
+                                        <div id="imagePreview">
+                                            {% for img in product[0]['img_url'] %}
+                                            <div class="img-container"
+                                                style="display:inline-block; position:relative; margin:10px;">
+                                                <img style="width: 150px; display:block;" src="{{ img_url ~ img }}"
+                                                    alt="">
+                                                <button class="del_btn" type="button"
+                                                    style="position: absolute; top: 5px; right: 5px; background-color: #ff4d4d; border: none; color: white; cursor: pointer;">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="return_policy">Return Policy <span
+                                                class="text-danger">*</span></label>
+                                        <select class="form-control" id="sub_category" name="return_policy" required>
+                                            <option value="" disabled selected>Select category</option>
+                                            <option value="allowed_only_7_days_after" {% if
+                                                product[0]['return_policy']=='allowed_only_7_days_after' %}selected{%
+                                                endif %}>Allowed only 7 days after the
+                                                product purchased.</option>
+                                            <option value="not_allowed" {% if product[0]['return_policy']=='not_allowed'
+                                                %}selected{% endif %}>Do not allowed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="card-action">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <a href="{{url_for('seller.edit_products')}}#{{ product[0]['product_id'] }}" class="btn btn-danger">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <div class="toast-container">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+            <div class="toast-body">
+                {{ message }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+{% endblock %}
+
+{% block tail %}
+
+<script src="/static/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="/static/assets/js/core/popper.min.js"></script>
+<script src="/static/assets/js/core/bootstrap.min.js"></script>
+<script src="/static/assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="/static/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="/static/assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="/static/assets/js/ready.min.js"></script>
+<script src="/static/assets/js/demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+<script>
+    window.onload = function () {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl, { autohide: true, delay: 5000 });
+        });
+        toastList.forEach(toast => toast.show());
+    };
+</script>
+
+<script>
+    document.querySelectorAll('.del_btn').forEach(button => {
+        button.addEventListener('click', function () {
+            // Remove the parent div (the container of the image and button)
+            this.parentElement.remove();
+        });
+    });
+</script>
+
+
+<script>
+    /* $(document).ready(function () {
+         $('#confirmDelete').on('click', function () {
+             var p_id = $('#p_id').val();  // Retrieve the product ID
+             if (p_id) {
+                 $.ajax({
+                     url: 'https://api.oxyher.com/s/products/delete_product',  // Flask route to delete product
+                     type: 'POST',
+                     crossDomain: true,
+                     contentType: 'application/json',
+                     data: {
+                         p_id: p_id,
+ 
+                     },
+                     success: function (response) {
+                         if (response.message === 'Product deleted successfully') {
+                             // Show success message and redirect to another page, or refresh
+                             alert('Product deleted successfully');
+                             location.replace("/seller/products/edit_product");  // Redirect or refresh
+                         } else {
+                             alert(response.error || 'Error deleting product');
+                         }
+                     },
+                     error: function (xhr, status, error) {
+                         console.log('Error:', error);
+                         alert('There was a problem deleting the product.');
+                     }
+                 });
+             } else {
+                 alert('No product ID provided.');
+             }
+         });
+     }); */
+
+    fetch('https://api.oxyher.com/s/product/delete_product', {
+        method: 'POST', // or 'POST'
+        headers: {
+            'Content-Type': 'application/json',
+            // Include other headers as needed
+        },
+        credentials: 'include' // If you need to send cookies or HTTP authentication
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => console.log(data))
+        .catch(error => console.error('There has been a problem with your fetch operation:', error));
+
+</script>
+
+
+
+
+{% endblock %}

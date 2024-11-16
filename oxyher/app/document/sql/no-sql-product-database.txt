@@ -1,0 +1,17 @@
+The `Product something` database contains various products such as health, hygiene, beauty products.
+Eg  `Product face` This database contains the product details about all the face products such as toners, foundations, face wash etc.
+
+-------------------------------------------------------------
+-		    Product details			    -
+-							    -
+-	Product id 		 => xyzzy		    -
+-	Display name 		 => zyxin		    -
+-	Brand			 => ABC			    -
+-	Age category		 => 1-10		    -
+- 	Net Volume		 => 100 ml		    -
+-	product price (Single)   => 000 Rs		    -
+-	product image URL	 => https://s.com/s.jpg	    -	
+-	description		 => sentence of words	    -
+-	reviews			 => sentence of words	    -
+-							    -
+-------------------------------------------------------------

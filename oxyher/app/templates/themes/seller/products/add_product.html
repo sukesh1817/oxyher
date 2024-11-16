@@ -1,0 +1,761 @@
+{% extends "base.html" %}
+
+
+
+
+
+{% block head %}
+
+<title>Add Products seller</title>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+    name='viewport' />
+<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+<link rel="stylesheet" href="/static/assets/css/ready.css">
+<link rel="stylesheet" href="/static/assets/css/demo.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
+    rel="stylesheet">
+
+<style>
+    /* Position the toast in the lower middle of the screen */
+    .toast-container {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1055;
+    }
+
+    /* Customized Toast Styles */
+    .toast {
+        background-color: #fff;
+        /* White background for cleanliness */
+        border-radius: 8px;
+        /* Rounded corners */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        /* Subtle drop shadow */
+        max-width: 300px;
+        /* Maximum width for better presentation */
+        font-family: Arial, sans-serif;
+        /* Clean font */
+    }
+
+
+
+    .toast-body {
+        font-size: 14px;
+        /* Neat font size */
+        color: #fefefe;
+        /* Dark text for body */
+        padding: 10px 15px;
+        background-color: #363232
+            /* Padding for body */
+    }
+
+    /* Close button custom style */
+    .btn-close {
+        filter: brightness(0) invert(1);
+        /* White close button */
+    }
+
+    /* Customize the timestamp text */
+    .text-muted {
+        font-size: 12px;
+        /* Smaller font for timestamp */
+        color: #ccc;
+        /* Light gray for timestamp */
+    }
+</style>
+<style>
+    .mt-man {
+        margin-top: 100px;
+    }
+</style>
+
+
+{% endblock %}
+
+{% block body %}
+
+<div class="wrapper">
+
+    {% include "themes/seller/common/navbar.html" %}
+    {% include "themes/seller/common/sidebar.html" %}
+
+
+
+
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <h4 class="page-title">Add New Products</h4>
+                <div class="also-do mx-1">
+                    <p>Also want to do ?</p>
+                    <a href="{{ url_for('seller.delete_products')}}" class="card-link">Delete Product</a>
+                    <a href="{{ url_for('seller.edit_products')}}" class="card-link">Edit Product</a>
+                </div>
+
+                <form id="uploadForm" action="{{url_for('seller.post_products')}}" method="post"
+                    enctype="multipart/form-data">
+
+                    <div class="row">
+                        <div class="col-md-6 col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Register Your Products</div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="product_title">Product Title <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="product_title" id="product_title"
+                                            placeholder="Enter product title" required>
+                                        <small class="form-text text-muted">This will show as the main heading of the
+                                            product.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="product_title">Product Display name <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="display_name" id="display_name"
+                                            placeholder="Enter display name" required>
+                                        <small class="form-text text-muted">This can be display in some areas such as cart, checkout process etc.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="product_description">Product Description <span
+                                                class="text-danger">*</span></label>
+                                        <textarea class="form-control" name="product_description"
+                                            id="product_description" placeholder="Enter product description" rows="3"
+                                            required></textarea>
+                                        <small class="form-text text-muted">Provide a detailed description of the
+                                            product.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="brand_name">Brand name
+                                            <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="brand_name" id="brand_name"
+                                            placeholder="Enter brand name" required>
+                                        <small class="form-text text-muted">Please provide the product brand
+                                            name.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="product_id">Product Id<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="product_id" id="product_id"
+                                            value="{{ product_id }}" placeholder="Enter SKU" readonly>
+                                        <small class="form-text text-muted">This id is generated by random, this is
+                                            unique for every product.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="product_price">Price <span class="text-danger">*</span></label>
+                                        <input type="number" name="product_price" class="form-control"
+                                            id="product_price" placeholder="Enter product price" required>
+                                        <small class="form-text text-muted">Please provide the price of single
+                                            quanity.</small>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="product_quantity">Quantity in Stock <span
+                                                class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="product_quantity"
+                                            id="product_quantity" placeholder="Enter quantity" required>
+                                        <small class="form-text text-muted">Enter the quantity of stock you want to
+                                            show.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="product_images">Product Images <span
+                                                class="text-danger">*</span></label>
+                                        <input type="file" class="form-control-file" name="images" id="product_images"
+                                            multiple accept="image/*" multiple>
+                                        <small class="form-text text-muted">Multiple images allowed, image dimension
+                                            must be 600 x 600</small>
+                                        <div id="imagePreview"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="return_policy">Return Policy <span
+                                                class="text-danger">*</span></label>
+                                        <select class="form-control" id="sub_category" name="return_policy" required>
+                                            <option value="" disabled selected>Select category</option>
+                                            <option value="allowed_only_7_days_after">Allowed only 7 days after the
+                                                product purchased.</option>
+                                            <option value="not_allowed">Do not allowed</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="product_category">Product Category <span
+                                                class="text-danger">*</span></label>
+                                        <select class="form-control" id="product_category" name="product_category"
+                                            required>
+                                            <option value="" disabled selected>Select category</option>
+                                            <option value="intimate_care">Intimate care</option>
+                                            <option value="inner_wears">Inner wears</option>
+                                            <option value="medicines">Medicines</option>
+                                            <option value="kids_section">Kids</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div id="dynamic_attributes"></div>
+                                    <div id="sub_dynamic"></div>
+
+                                </div>
+                                <div class="card-action">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button class="btn btn-danger">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <div id="message" class="toast-container">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+            <div class="toast-body">
+                {{ message }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+{% endblock %}
+
+{% block tail %}
+
+<script src="/static/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="/static/assets/js/core/popper.min.js"></script>
+<script src="/static/assets/js/core/bootstrap.min.js"></script>
+<script src="/static/assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="/static/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="/static/assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="/static/assets/js/ready.min.js"></script>
+<script src="/static/assets/js/demo.js"></script>
+
+<script>
+    const toast = setTimeout(hide, 3000);
+    function hide() {
+        let t = document.getElementById("message")
+        t.style.display = 'none';
+    }
+</script>
+
+
+<script>
+    document.getElementById('product_category').addEventListener('change', function () {
+        let selectedCategory = this.value;
+        var dynamicAttributes = document.getElementById('dynamic_attributes');
+        var subDynamicAttributes = document.getElementById('sub_dynamic');
+        subDynamicAttributes.innerHTML = '';
+        // Clear the current content
+        dynamicAttributes.innerHTML = '';
+
+        // Dynamically set form fields based on selected category
+        switch (selectedCategory) {
+            case 'intimate_care':
+                dynamicAttributes.innerHTML = `
+                   <div class="form-group">
+                        <label for="sub_category">Intimate care <span
+                                class="text-danger">*</span></label>
+                        <select class="form-control" id="sub_category" name="sub_category" required>
+                            <option value="" disabled selected>Select category</option>
+                            <option value="sanitary_pads">Sanitary Pads</option>
+                            <option value="menstrual_cups">Menstrual Cups</option>
+                            <option value="menstrual_cup_wash">Menstrual Cup wash</option>
+                        </select>
+                    </div>`;
+                break;
+
+            case 'inner_wears':
+                dynamicAttributes.innerHTML = `
+                    <div class="form-group">
+                        <label for="sub_category">Inner care <span
+                                class="text-danger">*</span></label>
+                        <select class="form-control" id="sub_category" name="sub_category" required>
+                            <option value="" disabled selected>Select category</option>
+                            <option value="daily_essentials_panties">Daily Essentials Panties</option>
+                            <option value="period_panties">Period panties</option>
+                            <option value="undershorts">Undershorts</option>
+                            <option value="bras_camis">Bras & Camis</option>
+                        </select>
+                    </div>
+                `;
+                break;
+
+            case 'medicines':
+                dynamicAttributes.innerHTML = `
+                    <div class="form-group">
+                        <label for="sub_category">Medicine <span
+                                class="text-danger">*</span></label>
+                        <select class="form-control" id="sub_category" name="sub_category" required>
+                            <option value="" disabled selected>Select category</option>
+                            <option value="medicine_spray">Spray</option>
+                            <option value="medicine_stripes">Stripes</option>
+                        </select>
+                    </div>
+                `;
+                break;
+            case 'kids_section':
+                dynamicAttributes.innerHTML = `
+                    <div class="form-group">
+                        <label for="sub_category">Kids <span
+                                class="text-danger">*</span></label>
+                        <select class="form-control" id="sub_category" name="sub_category" required>
+                            <option value="" disabled selected>Select category</option>
+                            <option value="girls_shorts">Girls shorts</option>
+                            <option value="camisole">Camisole</option>
+                            <option value="girls_panties">Girls panties</option>
+                        </select>
+                    </div>
+                `;
+                break;
+
+
+            default:
+                dynamicAttributes.innerHTML = '';
+        }
+    });
+
+
+
+
+
+    document.getElementById('dynamic_attributes').addEventListener('change', function (event) {
+        var subDynamicAttributes = document.getElementById('sub_dynamic');
+        subDynamicAttributes.innerHTML = '';
+
+        if (event.target.value === 'sanitary_pads') {
+            let attributesHtml = `
+            <div class="form-group">
+                <label for="padType">Type:</label>
+                <select id="padType" name="padType" class="form-control">
+                    <option value="regular">Regular</option>
+                    <option value="overnight">Overnight</option>
+                    <option value="panty-liners">Panty Liners</option>
+                    <option value="ultra-thin">Ultra-thin</option>
+                    <option value="organic">Organic</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="absorbency">Absorbency Level:</label>
+                <select id="absorbency" name="absorbency" class="form-control">
+                    <option value="light">Light</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="heavy">Heavy</option>
+                    <option value="super-absorbent">Super Absorbent</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="length">Length:</label>
+                <select id="length" name="length" class="form-control">
+                    <option value="standard">Standard (240mm)</option>
+                    <option value="long">Long (280mm)</option>
+                    <option value="extra-long">Extra Long (320mm)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="material">Material:</label>
+                <select id="material" name="material" class="form-control">
+                    <option value="cotton">Cotton</option>
+                    <option value="biodegradable">Biodegradable</option>
+                    <option value="synthetic">Synthetic</option>
+                    <option value="organic-cotton">Organic Cotton</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="wings">Wings:</label>
+                <select id="wings" name="wings" class="form-control">
+                    <option value="with-wings">With Wings</option>
+                    <option value="without-wings">Without Wings</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fragrance">Fragrance:</label>
+                <select id="fragrance" name="fragrance" class="form-control">
+                    <option value="scented">Scented</option>
+                    <option value="unscented">Unscented</option>
+                </select>
+            </div>
+
+
+
+              
+            `;
+            subDynamicAttributes.innerHTML = attributesHtml;
+        }
+        else if (event.target.value === 'menstrual_cups') {
+            let attributesHtml = `
+            <div class="form-group">
+                <label for="cup_capacity">Capacity</label>
+                <select id="cup_capacity" name="cup_capacity" class="form-control">
+                    <option value="15_ml">15 ml</option>
+                    <option value="40_ml">40 ml</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cup_size">Size</label>
+                <select id="cup_size" name="cup_size" class="form-control">
+                    <option value="sm">Small</option>
+                    <option value="md">Medium</option>
+                    <option value="lg">Large</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cup_shape">Shape</label>
+                <select id="shapr" name="cup_shape" class="form-control">
+                    <option value="v_shape">V-shape</option>
+                    <option value="bell_shape">Bell-shape</option>
+                    <option value="round_shape">Round-shape</option>
+                </select>
+            </div>
+
+        
+            `;
+            subDynamicAttributes.innerHTML = attributesHtml;
+        }
+
+        else if (event.target.value === 'daily_essentials_panties') {
+            let attributesHtml = `
+            <div class="form-group">
+            <label for="panty-style">Choose your panty style:</label>
+            <select id="panty-style" name="panty-style" class="form-control">
+                <option value="bikini">Bikini</option>
+                <option value="hipster">Hipster</option>
+                <option value="high-waist">High-Waist</option>
+                <option value="boyshort">Boyshort</option>
+                <option value="thong">Thong</option>
+            </select>
+            </div>
+
+            <div class="form-group">
+            <label for="size">Choose your size:</label>
+            <select id="size" name="size" class="form-control">
+                <option value="xs">XS</option>
+                <option value="s">S</option>
+                <option value="m">M</option>
+                <option value="l">L</option>
+                <option value="xl">XL</option>
+            </select>
+            </div>
+
+            <div class="form-group">
+            <label for="color">Choose your color:</label>
+            <select id="color" name="color" class="form-control">
+                 <option value="same_color">Same color</option>
+            <option value="combo_color">Combo color</option>
+            </select>
+            </div>
+            `;
+            subDynamicAttributes.innerHTML = attributesHtml;
+        }
+        else if (event.target.value === 'period_panties') {
+            let attributesHtml = `
+            <div class="form-group">
+        <label for="absorbency-level">Choose your absorbency level:</label>
+        <select id="absorbency-level" name="absorbency-level" class="form-control">
+            <option value="light">Light</option>
+            <option value="moderate">Moderate</option>
+            <option value="heavy">Heavy</option>
+            <option value="overnight">Overnight</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="style">Choose your style:</label>
+        <select id="style" name="style" class="form-control">
+            <option value="bikini">Bikini</option>
+            <option value="hipster">Hipster</option>
+            <option value="high-waist">High-Waist</option>
+            <option value="boyshort">Boyshort</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="size">Choose your size:</label>
+        <select id="size" name="size" class="form-control">
+            <option value="xs">XS</option>
+            <option value="s">S</option>
+            <option value="m">M</option>
+            <option value="l">L</option>
+            <option value="xl">XL</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="color">Choose your color:</label>
+        <select id="color" name="color" class="form-control">
+             <option value="same_color">Same color</option>
+            <option value="combo_color">Combo color</option>
+        </select>
+        </div>
+            `;
+            subDynamicAttributes.innerHTML = attributesHtml;
+        }
+        else if (event.target.value === 'undershorts') {
+            let attributesHtml = `
+           <div class="form-group">
+        <label for="fabric">Choose your fabric:</label>
+        <select id="fabric" name="fabric" class="form-control">
+            <option value="cotton">Cotton</option>
+            <option value="spandex">Spandex</option>
+            <option value="nylon">Nylon</option>
+            <option value="microfiber">Microfiber</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="length">Choose your length:</label>
+        <select id="length" name="length" class="form-control">
+            <option value="short">Short</option>
+            <option value="mid-thigh">Mid-Thigh</option>
+            <option value="knee-length">Knee-Length</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="size">Choose your size:</label>
+        <select id="size" name="size" class="form-control">
+            <option value="xs">XS</option>
+            <option value="s">S</option>
+            <option value="m">M</option>
+            <option value="l">L</option>
+            <option value="xl">XL</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="color">Choose your color:</label>
+        <select id="color" name="color" class="form-control">
+            <option value="same_color">Same color</option>
+            <option value="combo_color">Combo color</option>
+       
+        </select>
+        </div>
+
+            `;
+            subDynamicAttributes.innerHTML = attributesHtml;
+        }
+        else if (event.target.value === 'bras_camis') {
+            let attributesHtml = `
+           <div class="form-group">
+        <label for="fabric">Choose your fabric:</label>
+        <select id="fabric" name="fabric" class="form-control">
+            <option value="cotton">Cotton</option>
+            <option value="spandex">Spandex</option>
+            <option value="nylon">Nylon</option>
+            <option value="microfiber">Microfiber</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="length">Choose your length:</label>
+        <select id="length" name="length" class="form-control">
+            <option value="short">Short</option>
+            <option value="mid-thigh">Mid-Thigh</option>
+            <option value="knee-length">Knee-Length</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="size">Choose your size:</label>
+        <select id="size" name="size" class="form-control">
+            <option value="xs">XS</option>
+            <option value="s">S</option>
+            <option value="m">M</option>
+            <option value="l">L</option>
+            <option value="xl">XL</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="color">Choose your color:</label>
+        <select id="color" name="color" class="form-control">
+            <option value="same_color">Same color</option>
+            <option value="combo_color">Combo color</option>
+       
+        </select>
+        </div>
+
+            `;
+            subDynamicAttributes.innerHTML = attributesHtml;
+        }
+        else if (event.target.value === 'medicine_spray') {
+            let attributesHtml = `
+        <div class="form-group">
+        <label for="type">Choose your type:</label>
+        <select id="type" name="type" class="form-control">
+            <option value="roll_on">Roll on</option>
+            <option value="normal">Normal</option>
+        </select>
+        </div>
+
+         <div class="form-group">
+        <label for="ml">Choose your ml:</label>
+        <select id="ml" name="ml" class="form-control">
+            <option value="50_ml">50 ml</option>
+            <option value="100_ml">100 ml</option>
+            <option value="150_ml">150 ml</option>
+        </select>
+        </div>
+
+       
+
+       
+
+            `;
+            subDynamicAttributes.innerHTML = attributesHtml;
+        }
+        else if (event.target.value === 'menstrual_cup_wash') {
+            let attributesHtml = `
+        <div class="form-group">
+        <label for="self_time">Self Time</label>
+        <select id="self_time" name="self_time" class="form-control">
+            <option value="12_months">12 months</option>
+            <option value="24_months">24 months</option>
+        </select>
+        </div>
+
+         <div class="form-group">
+        <label for="ml">Choose your ml:</label>
+        <select id="ml" name="ml" class="form-control">
+            <option value="50_ml">50 ml</option>
+            <option value="100_ml">100 ml</option>
+            <option value="150_ml">150 ml</option>
+        </select>
+        </div>
+            `;
+            subDynamicAttributes.innerHTML = attributesHtml;
+        }
+
+        else if (event.target.value === 'girls_shorts' || event.target.value === 'camisole' || event.target.value === 'girls_panties') {
+            let attributesHtml = `
+        <div class="form-group">
+        <label for="type">Type</label>
+        <select id="type" name="type" class="form-control">
+            <option value="cotton">Cotton</option>
+            <option value="lycra">Lycra</option>
+        </select>
+        </div>
+
+         <div class="form-group">
+        <label for="pack">Pack</label>
+        <select id="pack" name="pack" class="form-control">
+            <option value="1">Pack of 1</option>
+            <option value="2">Pack of 2</option>
+            <option value="3">pack of 3</option>
+        </select>
+        </div>
+            `;
+            subDynamicAttributes.innerHTML = attributesHtml;
+        }
+
+
+    });
+</script>
+
+<script>
+    let selectedFiles = []; // To store the selected files
+
+    document.getElementById('product_images').addEventListener('change', function () {
+        const imagePreview = document.getElementById('imagePreview');
+        imagePreview.innerHTML = ''; // Clear previous images
+        imagePreview.innerHTML += '<small class="form-text text-muted fw-bold">Please upload the main image of the product first, it will show for the product in the customer side</small>';
+
+        const files = Array.from(this.files); // Convert file list to array
+
+        selectedFiles = []; // Clear previous file selection
+
+        files.forEach((file, index) => {
+            if (file.type.startsWith('image/')) {
+                selectedFiles.push(file); // Add file to selectedFiles array
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgContainer = document.createElement('div');
+                    imgContainer.style.position = 'relative';
+                    imgContainer.style.display = 'inline-block';
+                    imgContainer.style.margin = '10px';
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '150px';
+                    img.style.display = 'block';
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.innerText = 'Delete';
+                    deleteButton.style.position = 'absolute';
+                    deleteButton.style.top = '5px';
+                    deleteButton.style.right = '5px';
+                    deleteButton.style.backgroundColor = '#ff4d4d';
+                    deleteButton.style.border = 'none';
+                    deleteButton.style.color = 'white';
+                    deleteButton.style.cursor = 'pointer';
+
+                    // Remove the image from preview and selectedFiles array
+                    deleteButton.addEventListener('click', () => {
+                        imgContainer.remove(); // Remove the image container
+                        selectedFiles.splice(index, 1); // Remove file from selectedFiles
+                    });
+
+                    imgContainer.appendChild(img);
+                    imgContainer.appendChild(deleteButton);
+                    imagePreview.appendChild(imgContainer);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+
+    // Reorder files before submitting the form
+    document.getElementById('uploadForm').addEventListener('submit', function (e) {
+        const fileInput = document.getElementById('product_images');
+        const dataTransfer = new DataTransfer(); // DataTransfer to reorder files
+
+        // Append the first selected image first (main image)
+        if (selectedFiles.length > 0) {
+            dataTransfer.items.add(selectedFiles[0]);
+        }
+
+        // Append remaining images
+        for (let i = 1; i < selectedFiles.length; i++) {
+            dataTransfer.items.add(selectedFiles[i]);
+        }
+
+        // Update the file input with reordered files
+        fileInput.files = dataTransfer.files;
+    });
+</script>
+
+
+{% endblock %}

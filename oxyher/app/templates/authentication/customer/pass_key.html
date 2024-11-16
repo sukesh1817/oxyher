@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href='{{ url_for("static", filename="css/login.css")}}'>
+<link rel="stylesheet" href='{{ url_for("static", filename="css/oxyher.css")}}'>
+<link rel="stylesheet" href='{{ url_for("static", filename="css/font.css")}}'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+    .password-container {
+        position: relative;
+        align-items: center;
+        /* Center vertically */
+    }
+
+    .form-input {
+        flex: 1;
+        /* Allow input to take available space */
+        padding-right: 60px;
+        /* Add space for the button */
+        padding: 10px;
+        /* Add padding for better appearance */
+        border-radius: 5px;
+        /* Rounded corners */
+        font-size: 16px;
+        /* Input font size */
+    }
+
+    .show-btn {
+        position: absolute;
+        right: 5px;
+        /* Adjust to your preference */
+        top: 50%;
+        /* Center vertically */
+        transform: translateY(-50%);
+        /* Adjust to center */
+        border: none;
+        /* Remove border */
+        background-color: transparent;
+        /* Make background transparent */
+        color: #000000;
+        /* Icon color */
+        font-size: 20px;
+        /* Icon size */
+        cursor: pointer;
+        /* Pointer cursor */
+        transition: color 0.3s;
+        /* Smooth transition */
+    }
+
+    .show-btn:hover {
+        color: #000000;
+        /* Darker blue on hover */
+    }
+
+    .show-btn:focus {
+        outline: none;
+        /* Remove default outline */
+    }
+</style>
+{% endblock %}
+
+
+
+{% block body %}
+
+<div id="main-wrapper" class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            <div class="card bg-light border-0">
+                <div class="card-body p-0">
+                    <div class="row no-gutters">
+                        <div class="col-lg-6">
+                            <div class="p-4">
+                                <div class="mb-3">
+                                    <h3 class="h4  gradient-text fs-1">Login</h3>
+                                </div>
+
+                                <h6 class="h5 mb-0">Welcome back !</h6>
+                                <p class="text-muted mt-2 mb-3">Enter your email address and password login into your
+                                    account.</p>
+                                <form action="{{ url_for('auth.signin') }}" method="post">
+
+                                    <div class="form-group mb-3 ">
+                                        {% if auth_key %}
+                                        <input type="hidden" name="auth_key" value="{{auth_key}}">
+                                        {% endif %}
+                                        <label for="pass_key">Password</label>
+                                            <div class="password-container">
+                                                <input type="password" class="form-input rounded-sharp mt-1"
+                                                    name="pass_key" id="pass_key" required>
+                                                <button type="button" id="togglePassword_1" class="show-btn">
+                                                    <i class="fas fa-eye" id="icon_1"></i>
+                                                </button>
+
+                                            </div>
+                                            {% if pass_key %}
+                                            <div class="input-container">
+                                                <div class="rounded-sharp container mt-1 alert alert-danger alert-dismissible fade show"
+                                                    role="alert">
+                                                    <strong>{{ error }}</strong> is wrong.
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+
+                                            {% if acc_not_found %}
+                                            <div class="input-container">
+                                                <div class="rounded-sharp container mt-1 alert alert-danger alert-dismissible fade show"
+                                                    role="alert">
+                                                    <strong>{{ error }}</strong>, please <a href="{{ url_for('auth.signup')}}">signup</a>.
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        <div class="input-container">
+                                            <button style="border-radius: 4px;" type="submit"
+                                                class="btn btn-voilet  text-white container-fluid mt-4">Signin</button>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group mb-3">
+                                        <p class="text-center fw-normal">or</p>
+                                        <a style="border-radius: 4px;" href="{{ url_for('auth.google_o_auth') }}" class="btn btn-darkblue container-fluid">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                fill="currentColor" class="bi bi-google text-white" viewBox="0 0 16 16"
+                                                disabled="">
+                                                <path
+                                                    d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                                            </svg>
+                                            <span class="ms-2 fs-6 text-white">Log in with google</span>
+                                        </a>
+                                    </div>
+                                    <div class="mt-5 mb-3">
+                                        <hr>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <p>Need new account ? <a href="{{ url_for('auth.signup') }}"
+                                                class="forgot-link float-right text-primary">click here</a> </p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <p>Forget your password ? <a href="{{ url_for('auth.forget_pass') }}"
+                                                class="forgot-link float-right text-primary">click here</a> </p>
+                                    </div>
+
+                                    <!--<div class="form-group mb-3">
+                                        <p>Don't have an account? <a href="" class="float-right text-primary">register</a></p>
+                                    </div> -->
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 d-none d-lg-inline-block mt-3">
+                            <div class="account-block">
+                                <div class="overlay"></div>
+                                <div class="account-testimonial">
+                                    <h4 class="text-white mb-4">This beautiful life yours!</h4>
+                                    <p class="lead text-white">"Best investment i made for a long time. Can only
+                                        recommend it for other users."</p>
+                                    <p>- Women</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block tail %}
+
+<script>
+    const quotes = [
+        {% for quote in quotes %}
+    {
+        text: "{{ quote.quote|escape }}",
+            author: "{{ quote.author|escape }}"
+    } {% if not loop.last %}, {% endif %}
+    {% endfor %}
+];
+
+    function displayRandomQuote() {
+        const quoteSection = document.getElementById('quote-section');
+
+        // Add slide-out animation class
+        quoteSection.classList.add('slide-out');
+
+        setTimeout(() => {
+            // Generate a new random quote
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote-text').innerText = randomQuote.text;
+            document.getElementById('quote-author').innerText = randomQuote.author;
+
+            // Remove slide-out class and add slide-in class
+            quoteSection.classList.remove('slide-out');
+            quoteSection.classList.add('slide-in');
+        }, 500); // Wait for slide-out animation to complete (0.5s)
+    }
+
+    // Initial display
+    displayRandomQuote();
+
+    // Update quote every 5 seconds
+    setInterval(displayRandomQuote, 5000);
+</script>
+
+<script src='{{ url_for("static", filename="js/scripts.js")}}'></script>
+<script src='{{ url_for("static", filename="js/query.js")}}'></script>
+<script src='{{ url_for("static", filename="js/login.js")}}'></script>
+
+
+<script>
+    const togglePassword_1 = document.querySelector('#togglePassword_1');
+    const passwordField_1 = document.querySelector('#pass_key');
+    const icon_1 = document.querySelector('#icon_1');
+
+    togglePassword_1.addEventListener('click', function () {
+        const type = passwordField_1.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField_1.setAttribute('type', type);
+
+        // Toggle the icon
+        if (type === 'password') {
+            icon_1.classList.remove('fa-eye-slash'); // Hide password
+            icon_1.classList.add('fa-eye'); // Show eye icon
+        } else {
+            icon_1.classList.remove('fa-eye'); // Show password
+            icon_1.classList.add('fa-eye-slash'); // Show eye-slash icon
+        }
+        passwordField_1.focus();
+    });
+</script>
+{% endblock %}

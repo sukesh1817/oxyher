@@ -1,0 +1,2 @@
+//////////////// MYSQL SEVRER ////////////
+EDIT /var/www/oxyher/app/__init__.py TO CHANGE THE DATABASE CONFIG 

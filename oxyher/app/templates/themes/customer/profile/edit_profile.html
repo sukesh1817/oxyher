@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Profile</title>
+<link href='{{ url_for("static", filename="css/style.css")}}' rel="stylesheet">
+
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+</style>
+
+<style>
+    input::placeholder, textarea::placeholder {
+        color: red;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+{% include 'themes/customer/common/navbar.html' %}
+
+<div class="col-lg-6 col-md-12 mt-5 mb-4 mx-auto mx-lg-2">
+    <div class="container">
+        <div style="border-radius: 4px;" class="card">
+            <div class="m-3">
+                <div class="header mb-2">
+                    <h3>Edit profile</h3>
+                </div>
+                <div class="go-back">
+                    <a class="text-decoration-none" href="{{ url_for('profile.home')}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
+                        </svg> back to profile
+                    </a>
+
+                </div>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="mb-3 mx-3 ">
+                {% for category, message in messages %}
+                <div style="border-radius: 4px;" class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+
+            <form action="{{ url_for('profile.edit_profile')}}" method="POST">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input id="username" class="border form-control-plaintext px-2 bg-body-secondary"
+                            value="{{ user[0] }}" readonly />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="full_name" class="form-label">Full Name <span
+                                class="required-indicator text-danger">*</span></label>
+                        <input id="full_name" name="full_name" class="border form-control-plaintext px-2"
+                            value="{{ user[1] }}" placeholder="Enter your full name" required />
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label for="email" class="form-label">Email <span
+                                class="required-indicator text-danger">*</span></label>
+                        {% if user[2] == "NOT_GIVEN" %}
+                        <input id="email" class="border form-control-plaintext px-2" name="email" 
+                            placeholder="Enter your email" required />
+                        {% else %}
+                        <input id="email" class="border form-control-plaintext px-2" name="email" value="{{ user[2] }}"
+                        placeholder="Enter your email" required />
+                        {% endif %}
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone_no" class="form-label">Phone Number <span
+                                class="required-indicator text-danger">*</span></label>
+                        {% if user[3] is none %}
+                        <input type="number" id="phone_no" name="phone_no" class="border form-control-plaintext px-2"
+                            value="" placeholder="Enter your phone number" required />
+                        {% else %}
+                        <input type="number" id="phone_no" name="phone_no" class="border form-control-plaintext px-2"
+                            value="{{ user[3] }}" placeholder="Enter your phone number" />
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Primary Address <span
+                                class="required-indicator text-danger">*</span></label>
+                        {% if user[4] == "NOT_GIVEN" %}
+                        <textarea rows="5" id="address" name="address" class="border form-control-plaintext px-2"
+                            placeholder="Enter your address" required></textarea>
+                        <small class="text-danger">(Please provide the address without pincode)</small>
+                        {% else %}
+                        <textarea rows="5" id="address" name="address"
+                            class="border form-control-plaintext px-2">{{ user[4] }}</textarea>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone_no" class="form-label">Pincode<span
+                                class="required-indicator text-danger">*</span></label>
+                        {% if user[5] is none %}
+                        <input type="number" id="pin_code" name="pin_code" class="border form-control-plaintext px-2"
+                            value="" placeholder="Enter your pincode" required />
+                        {% else %}
+                        <input type="number" id="pin_code" name="pin_code" class="border form-control-plaintext px-2"
+                            value="{{ user[5] }}" placeholder="Enter your pincode" />
+                        {% endif %}
+                    </div>
+
+                    <div class="text-start">
+                        <button style="border-radius: 4px;" type="submit" class="btn btn-dark">Confirm Change</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block tail %}
+{% endblock %}

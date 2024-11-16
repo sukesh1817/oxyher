@@ -1,0 +1,3 @@
+user_auth  => This Table helps the user to make the username and password based authentication.
+user_details => This helps to store the user details like (name,email,phone_no) and all the necessary details.
+user_session => This handles the user session their ip,last_login_time and various other details.

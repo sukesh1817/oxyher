@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>User Orders</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='{{ url_for("static", filename="css/style.css")}}' rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+        }
+        .order-history-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+        }
+        .order-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .order-card {
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background-color: #ffffff;
+        }
+       
+        .order-id {
+            font-size: 1.1rem;
+            color: #007bff;
+            font-weight: 500;
+        }
+        .order-info {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .badge-status {
+            font-size: 0.85rem;
+            padding: 5px 10px;
+            border-radius: 12px;
+        }
+        .view-details {
+            font-weight: 500;
+            color: #020202;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .view-details:hover {
+            color: #090909;
+            text-decoration: none;
+        }
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 10px;
+        }
+    </style>
+    {% endblock %}
+
+
+
+    {% block body %}
+    {% include 'themes/customer/common/navbar.html' %}
+
+    <div class="container my-5 order-history-container">
+        <div class="order-header text-start">Order History</div>
+        <hr>
+
+        {% for i in orders.orders %}
+        
+        <div class="order-card">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="order-id">Order id  <small> #{{i['order_id']}}</small></div>
+                    <div class="order-info">Placed on {{i['order_date']}}</div>
+                </div>
+
+                <!-- <span class="bg-{% if i['status'] == 1 %}warning{% elif i['status'] == 2 %}success{% else %}danger{% endif %} px-2 py-3 rounded text-white">
+                    {% if i['status'] == 1 %}
+                        Processing
+                    {% elif i['status'] == 2 %}
+                        Delivered
+                    {% else %}
+                        Canceled
+                    {% endif %}
+                </span> -->
+                <span>
+                    {% if i['status'] == 1 %}
+                        Processing
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-dot text-info" viewBox="0 0 16 16">
+                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                          </svg>
+                    {% elif i['status'] == 2 %}
+                        Delivered
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-dot text-success" viewBox="0 0 16 16">
+                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                          </svg>
+                    {% else %}
+                        Canceled
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-dot text-danger" viewBox="0 0 16 16">
+                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                          </svg>
+                    {% endif %}
+                </span>
+                
+                            </div>
+            <div class="order-footer">
+                <small class="order-info">Sub total : {{i['total_amount'] | int}} Rs</small>
+                <a href="{{ url_for('profile.individual_order', o_id=i['order_id'])}}" class="view-details">View Details <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+
+    {% endblock %}
+
+
+
+    {% block tail %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% endblock %}

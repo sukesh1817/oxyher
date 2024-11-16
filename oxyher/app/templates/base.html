@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oxyher | Premium Women's Hygiene Products - Sanitary Pads, Menstrual Cups</title>
+    <meta name="description"
+        content="Oxyher offers premium women's hygiene products like sanitary pads and menstrual cups to ensure comfort, quality, and care for women's health.">
+    <meta name="keywords"
+        content="women's hygiene, sanitary pads, menstrual cups, Oxyher, hygiene products, health care">
+    <meta name="author" content="Oxyher Team">
+    <link rel="icon" type="image/x-icon" href="/static/img/ico/oxyher_icon.png">
+    <link rel="canonical" href="https://www.oxyher.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <link href='{{ url_for("static", filename="css/icomoon/style.css")}}' rel="stylesheet">
+
+    <!-- <link href='{{ url_for("static", filename="css/nav/style.css")}}' rel="stylesheet"> -->
+
+    <style>
+        * {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .site-logo {
+            display: flex;
+            justify-content: center;
+            /* Centers horizontally */
+            align-items: center;
+            /* Centers vertically */
+            height: 100px;
+            /* Adjust height as needed */
+        }
+
+        .site-logo img {
+            max-width: 100%;
+            /* Ensures the image fits the container */
+            height: 100px;
+        }
+    </style>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            /* White background */
+            color: #333;
+            /* Dark text for contrast */
+        }
+
+        .navBar {
+            background-color: #ffffff;
+            /* White navbar */
+            color: #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            /* Light border */
+        }
+
+        .navBar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .navBar ul li {
+            padding: 0 20px;
+        }
+
+        .navBar a {
+            color: #333;
+            /* Dark text for navbar items */
+            text-decoration: none;
+        }
+
+        .navBar a:hover {
+            color: #ff69b4;
+            /* Pink hover effect */
+            transition: color 0.3s ease;
+        }
+
+        .search-icon,
+        .cart-icon,
+        .profile-icon {
+            color: #333;
+            /* Dark icons */
+            cursor: pointer;
+        }
+
+        /* Left and Right Navbar Sections */
+        .navbar-left {
+            flex: 1;
+        }
+
+        .navbar-left img {
+            height: 10%;
+            width: 15%;
+            margin-left: 5%;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* Sidebar for Mobile */
+        .menu-icon {
+            display: none;
+            color: #333;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 0;
+            /* Initial width 0 */
+            background-color: #f8f8f8;
+            /* Light sidebar */
+            padding-top: 60px;
+            overflow-x: hidden;
+            transition: width 0.3s;
+            z-index: 1000;
+            color: #333;
+        }
+
+        .sidebar.open {
+            width: 250px;
+            /* Width when sidebar is open */
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+            /* Dark sidebar text */
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #ffe0e6;
+            /* Light pink on hover */
+            border-radius: 8px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            /* Adjusts distance from the top */
+            right: 10px;
+            /* Aligns it to the right of the sidebar */
+            font-size: 24px;
+            /* Smaller size for better alignment */
+            color: #333;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            border-radius: 15px;
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .navbar-right {
+                display: none;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+
+            .sidebar {
+                width: 0;
+            }
+
+            .navbar-left img {
+                width: 35%;
+                margin-left: 0px;
+            }
+        }
+
+        /* Search Modal Styles */
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* Light modal background */
+            z-index: 1000;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: #333;
+        }
+
+        .search-modal.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .search-header input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            /* Light input background */
+            color: #333;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .search-header button {
+            background-color: transparent;
+            border: none;
+            color: #333;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .recent-searches {
+            padding: 20px;
+        }
+
+        .recent-items .item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .recent-items .item:hover {
+            background-color: #ffe0e6;
+            /* Light pink on hover */
+        }
+
+        /* Responsive Search Modal for Larger Screens */
+        @media (min-width: 768px) {
+            .search-modal {
+                width: 50%;
+                height: 60%;
+                top: 20%;
+                left: 25%;
+                border-radius: 10px;
+            }
+        }
+
+        /* Animation for Modal */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-out {
+            opacity: 1;
+            animation: fadeOut 0.3s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.8);
+            /* Increase or decrease the opacity */
+        }
+    </style>
+
+
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body class="bg-light">
+
+
+    {% block body %}
+
+    {% endblock %}
+
+    {% block tail %}
+
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <script src='{{ url_for("static", filename="js/nav/popper.js")}}'></script>
+    <script src='{{ url_for("static", filename="js/nav/nav.js")}}'></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "name": "Oxyher",
+      "url": "https://www.oxyher.com",
+      "logo": "https://www.oxyher.com/static/img/ico/oxyher_icon.png",
+      "sameAs": [
+        "https://www.facebook.com/oxyher",
+        "https://www.instagram.com/oxyher"
+      ]
+    }
+  </script>
+
+    <script>
+        const searchModal = document.getElementById('searchModal');
+        const searchInput = document.getElementById('searchInput');
+        const navbarSearchBtn = document.getElementById('searchBtn');
+        const sidebarSearchBtn = document.getElementById('sidebarSearchBtn'); // New ID
+        const closeSearch = document.getElementById('closeSearch');
+
+        // Open Search Modal from Navbar Search Button
+        navbarSearchBtn.addEventListener('click', function () {
+            openSearchModal();
+        });
+
+        // Open Search Modal from Sidebar Search Button
+        sidebarSearchBtn.addEventListener('click', function () {
+            openSearchModal();
+        });
+
+        // Function to open the search modal
+        function openSearchModal() {
+            searchModal.style.display = 'block';
+            searchModal.classList.remove('fade-out');
+            searchModal.classList.add('fade-in');
+            searchInput.focus(); // Automatically focus on input when modal opens
+        }
+
+        // Close Search Modal
+        closeSearch.addEventListener('click', function () {
+            searchModal.classList.remove('fade-in');
+            searchModal.classList.add('fade-out');
+            setTimeout(() => {
+                searchModal.style.display = 'none';
+            }, 300); // Matches the fade-out animation duration
+        });
+
+
+        // Sidebar toggle function
+        function toggleSidebar() {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                document.body.style.overflow = ''; // Enable scrolling
+            } else {
+                sidebar.classList.add('open');
+                document.body.style.overflow = 'hidden'; // Disable scrolling when sidebar is open
+                history.pushState(null, null, location.href); // Push new state for back gesture
+            }
+        }
+
+        // Close the sidebar if the user clicks outside the sidebar
+        window.addEventListener('click', function (event) {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.classList.contains('open') && !sidebar.contains(event.target) && !event.target.closest('.menu-icon')) {
+                sidebar.classList.remove('open');
+                document.body.style.overflow = ''; // Re-enable scrolling
+            }
+        });
+
+        // Close the sidebar when the user triggers the back gesture (popstate)
+        window.addEventListener('popstate', function () {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                document.body.style.overflow = ''; // Re-enable scrolling
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

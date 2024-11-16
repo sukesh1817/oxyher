@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit&family=Red+Hat+Display:wght@600&family=Roboto+Mono:ital@1&display=swap');
+
+:root {
+    /*Font Weights*/
+    --font-weight1: 500;
+    --font-weight2: 700;
+    --font-weight3: 900;
+
+    /*Font Family*/
+    font-family: 'Red Hat Display', sans-serif;
+
+    /*Colors*/
+    --primary-color1: hsl(225, 100%, 94%);
+    --primary-color2: hsl(245, 75%, 52%);
+    --neutral-color1: hsl(225, 100%, 98%);
+    --neutral-color2: hsl(224, 23%, 55%);
+    --neutral-color3: hsl(223, 47%, 23%);
+    /* ### Primary
+
+- Pale blue: hsl(225, 100%, 94%)
+- Bright blue: hsl(245, 75%, 52%)
+
+### Neutral
+
+- Very pale blue: hsl(225, 100%, 98%)
+- Desaturated blue: hsl(224, 23%, 55%)
+- Dark blue: hsl(223, 47%, 23%) */
+}
+
+body {
+    font-size: var(--font-size);
+    background-image: url(/static/img/layout/pattern-background-mobile.svg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    background-repeat: no-repeat;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+    width: 25em;
+    background: whitesmoke;
+
+}
+
+@media (min-width: 375px) {
+    body {
+        font-size: var(--font-size);
+        background: url(/static/img/layout/pattern-background-desktop.svg);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-repeat: no-repeat;
+    }
+
+    .container {
+        border: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 1em;
+        width: 23em;
+        margin: 4em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
+
+.image img {
+    width: 100%;
+   
+}
+
+.passage {
+    text-align: center;
+}
+
+.passage h2 {
+    font-weight: bold;
+    padding: 0;
+}
+
+.passage p {
+    color: var(--neutral-color2);
+    padding: 0 0.5em;
+    font-size: 0.9em;
+}
+
+.plan {
+    border: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    border-radius: 1em;
+    background: whitesmoke;
+    padding: 0em 0;
+}
+
+.music-img {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0.2em;
+}
+
+.lst2 {
+    list-style-type: none;
+    padding-left: 0.3em;
+    font-size: 0.8em;
+}
+
+.music-img img {
+    width: 2.5em;
+    height: 2.5em;
+}
+
+.change {
+    padding-right: 1em;
+    font-size: 0.9em;
+    text-decoration: underline;
+    font-size: 0.8em;
+}
+
+
+.btn-proceed {
+    margin-top: 0.5em;
+    width: 80%;
+    margin: 1em 0;
+}
+
+.btn-proceed button {
+    color: var(--neutral-color1);
+    background: #D19C97;
+    border-radius: 1em;
+    width: 100%;
+    padding: 1em;
+    border: 0;
+    font-weight: var(--font-weight3);
+}
+
+.btn-proceed button:hover {
+    cursor: pointer;
+    background: #e7aaa4
+}
+
+
+.btn-cancel {
+    width: 80%;
+}
+
+.btn-cancel button {
+    color: var(--neutral-color2);
+    background: transparent;
+    border: 0;
+    border-radius: 1em;
+    width: 100%;
+    padding: 1em;
+    font-weight: var(--font-weight3);
+}
+
+.btn-cancel button:hover {
+    cursor: pointer;
+    color: var(--neutral-color3);
+}

@@ -1,0 +1,322 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oxyher Signin page</title>
+<meta name="description"
+    content="Oxyher signin page, you can signin with username and password based authentication and also login with google oauth">
+<meta name="keywords" content="Signin, Oauth, Oxyher Women hygeine">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href='{{ url_for("static", filename="css/login.css")}}'>
+<link rel="stylesheet" href='{{ url_for("static", filename="css/oxyher.css")}}'>
+<link rel="stylesheet" href='{{ url_for("static", filename="css/font.css")}}'>
+<style>
+    /* Position the toast in the lower middle of the screen */
+    .toast-container {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1055;
+    }
+
+    /* Customized Toast Styles */
+    .toast {
+        background-color: #fff;
+        /* White background for cleanliness */
+        border-radius: 8px;
+        /* Rounded corners */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        /* Subtle drop shadow */
+        max-width: 300px;
+        /* Maximum width for better presentation */
+        font-family: Arial, sans-serif;
+        /* Clean font */
+    }
+
+
+
+    .toast-body {
+        font-size: 14px;
+        /* Neat font size */
+        color: #fefefe;
+        /* Dark text for body */
+        padding: 10px 15px;
+        background-color: #363232
+            /* Padding for body */
+    }
+
+    /* Close button custom style */
+    .btn-close {
+        filter: brightness(0) invert(1);
+        /* White close button */
+    }
+
+    /* Customize the timestamp text */
+    .text-muted {
+        font-size: 12px;
+        /* Smaller font for timestamp */
+        color: #ccc;
+        /* Light gray for timestamp */
+    }
+</style>
+
+<style>
+    /* Slide out and slide in animation */
+    @keyframes slideOut {
+        0% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+    }
+
+    @keyframes slideIn {
+        0% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .slide-out {
+        animation: slideOut 0.5s forwards;
+    }
+
+    .slide-in {
+        animation: slideIn 0.5s forwards;
+    }
+    #quote-section {
+        /* Set a fixed height to avoid layout shifting */
+        height: 100px; /* Adjust as needed */
+        overflow: hidden; /* Prevent overflow during animation */
+        transition: opacity 0.5s ease; /* Smooth transition for fade */
+    }
+    
+    .slide-out {
+        opacity: 0; /* Fade out */
+    }
+    
+    .slide-in {
+        opacity: 1; /* Fade in */
+    }
+</style>
+
+<style>
+    .custom-toast {
+        background: linear-gradient(135deg, #ef7bcc, #25e3fc);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block body %}
+
+
+
+
+<div id="main-wrapper" class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            <div class="card bg-light border-0">
+                <div class="card-body p-0">
+                    <div class="row no-gutters">
+                        <div class="col-lg-6">
+                            <div class="p-4">
+                                <div class="mb-3">
+                                    <h3 class="h4 gradient-text fs-1">Signin</h3>
+                                </div>
+
+                                <h6 class="h5 mb-0">Welcome back !</h6>
+                                <p class="text-muted mt-2 mb-3">Enter your email address or mobile number.</p>
+                                <form action="{{url_for('auth.signin')}}" method="POST">
+                                    <div class="form-group mb-3 ">
+                                        <label for="auth_key">Email address or mobile number</label>
+                                        <div class="input-container">
+                                            <input type="text" class="container-fluid form-input rounded-sharp mt-1"
+                                                name="auth_key" id="auth_key" value="{{ session['auth_key'] }}"
+                                                required>
+                                        </div>
+
+
+
+                                        {% if auth_key %}
+                                        <div class="input-container">
+                                            <div class="rounded-sharp container mt-1 alert alert-danger alert-dismissible fade show"
+                                                role="alert">
+                                                <strong>{{ error }}</strong> not valid
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+
+                                        <div class="input-container">
+                                            <button style="border-radius: 4px;" type="submit"
+                                                class="btn btn-voilet  text-white container-fluid mt-4">Move
+                                                on</button>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group mb-3">
+                                        <p class="text-center fw-normal">or</p>
+                                        <a style="border-radius: 4px;" href="{{url_for('auth.google_o_auth')}}"
+                                            class="btn btn-darkblue  container-fluid">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                fill="currentColor" class="bi bi-google text-white" viewBox="0 0 16 16"
+                                                disabled="">
+                                                <path
+                                                    d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                                            </svg>
+                                            <span class="ms-2 fs-6 text-white">Log in with google</span>
+                                        </a>
+                                    </div>
+                                    <div class="mt-5 mb-3">
+                                        <hr>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <p>Need new account ? <a href="{{ url_for('auth.signup') }}"
+                                                class="forgot-link float-right text-primary">click here</a> </p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <p>Forget your password ? <a href="{{ url_for('auth.forget_pass') }}"
+                                                class="forgot-link float-right text-primary">click here</a> </p>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 d-none d-lg-inline-block mt-3">
+                            <div class="account-block">
+                                <div style="border-radius: 10px;" class="overlay"></div>
+                                <div id="quote-section" class="account-testimonial">
+                                    <p class="lead text-white" id="quote-text">
+                                       </p>
+                                    <p id="quote-author"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-6 d-none d-lg-inline-block mt-3 ">
+                            <div  class="account-block">
+                                <div style="border-radius: 10px;" class="overlay"></div>
+                                <div class="account-testimonial">
+                                    <h4 class="text-white mb-4">This beautiful life yours!</h4>
+                                    <p class="lead text-white">"Best investment i made for a long time. Can only
+                                        recommend it for other users."</p>
+                                    <p>- Women</p>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <div class="toast-container">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+            <div class="toast-body">
+                {{ message }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+
+
+{% block tail %}
+
+<script>
+    function decodeHtmlEntities(encodedString) {
+        const textarea = document.createElement('textarea'); // Create a textarea element
+        textarea.innerHTML = encodedString; // Set its HTML content to the encoded string
+        return textarea.value; // Get the decoded value
+    }
+
+    const quotes = [
+        {% for quote in quotes %}
+        {
+            text: "{{ quote.quote|escape }}",
+            author: "{{ quote.author|escape }}"
+        } {% if not loop.last %}, {% endif %}
+        {% endfor %}
+    ];
+
+    function displayRandomQuote() {
+        const quoteSection = document.getElementById('quote-section');
+
+        // Add slide-out animation class
+        //quoteSection.classList.add('slide-out');
+
+        setTimeout(() => {
+            // Generate a new random quote
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote-text').innerText = decodeHtmlEntities(randomQuote.text) ;
+            document.getElementById('quote-author').innerText = decodeHtmlEntities(randomQuote.author) ;
+
+            // Remove slide-out class and add slide-in class
+            //quoteSection.classList.remove('slide-out');
+            //quoteSection.classList.add('slide-in');
+        }, 1000); // Wait for slide-out animation to complete (0.5s)
+    }
+
+    // Initial display
+    displayRandomQuote();
+
+    // Update quote every 5 seconds
+    setInterval(displayRandomQuote, 5000);
+</script>
+
+
+<script src='{{ url_for("static", filename="js/scripts.js")}}'></script>
+<script src='{{ url_for("static", filename="js/query.js")}}'></script>
+<script src='{{ url_for("static", filename="js/login.js")}}'></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+<script>
+    const toastTrigger = document.getElementById('liveToastBtn')
+    const toastLiveExample = document.getElementById('liveToast')
+
+    const toast = new bootstrap.Toast(toastLiveExample)
+    toast.show()
+</script>
+
+<script>
+    window.onload = function () {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl, { autohide: true, delay: 3000 });
+        });
+        toastList.forEach(toast => toast.show());
+    };
+</script>
+
+{% endblock %}

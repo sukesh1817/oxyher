@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="utf-8">
+<title>Oxyher</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href='{{ url_for("static", filename="img/favicon.ico")}}' rel="icon">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href='{{ url_for("static", filename="lib/owlcarousel/assets/owl.carousel.min.css")}}' rel="stylesheet">
+<link href='{{ url_for("static", filename="css/style.css")}}' rel="stylesheet">
+
+
+{% endblock %}
+
+
+
+{% block body %}
+
+
+
+{% include 'themes/customer/common/navbar.html' %}
+
+
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+
+        {# Check the filter.html code that contains filter code as well as product print code #}
+        {% include 'themes/customer/shop/common/filters.html' %}
+
+        <div class="col-lg-9 col-md-12">
+            <!-- <h2 class="display-6">Explore the products</h2>
+            <hr>
+            <div id="productList" class="row pb-3"> -->
+
+            <!-- {% include 'themes/customer/shop/common/sort_by.html' %} -->
+
+
+
+
+
+
+
+
+            <div class="col-12 pb-1">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center mb-3">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% include 'themes/customer/common/footbar.html' %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $('#filters').on('change', function () {
+            var selectedCategory = $('input[name="category"]:checked').val();
+            var p_range = $('input[name="price"]:checked').val();
+
+            // Show loader before AJAX request
+            $('#productList').html(`
+               <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <div class="card h-100" aria-hidden="true">
+            <div class="card-body">
+                <h5 class="card-title placeholder-glow">
+                    <span class="placeholder col-6"></span>
+                </h5>
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-7"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-6"></span>
+                    <span class="placeholder col-8"></span>
+                </p>
+                <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-6"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100" aria-hidden="true">
+            <div class="card-body">
+                <h5 class="card-title placeholder-glow">
+                    <span class="placeholder col-6"></span>
+                </h5>
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-7"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-6"></span>
+                    <span class="placeholder col-8"></span>
+                </p>
+                <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-6"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100" aria-hidden="true">
+            <div class="card-body">
+                <h5 class="card-title placeholder-glow">
+                    <span class="placeholder col-6"></span>
+                </h5>
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-7"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-6"></span>
+                    <span class="placeholder col-8"></span>
+                </p>
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-7"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-6"></span>
+                    <span class="placeholder col-8"></span>
+                </p>
+                <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-6"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+            `);
+            // Send an AJAX request
+            $.ajax({
+                url: 'https://api.oxyher.com/c/shop/filters/',  // Update with your server URL 
+                method: 'GET',
+                data: { category: selectedCategory,p_range: p_range},
+                success: function (response) {
+                    // Update the product list with the filtered products
+                   $('#productList').fadeOut(300, function () {
+                        // Replace placeholder content with actual content and fade it in
+                        $('#productList').html(response).fadeIn(300);
+                    });
+                },
+                error: function () {
+                    alert('Error loading products.');
+                    $('#productList').html('<p class="text-center text-danger">Failed to load products.</p>');
+                }
+            });
+        });
+    });
+</script>
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+{% endblock %}
+
+
+
+{% block tail %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src='{{ url_for("static", filename="lib/easing/easing.min.js")}}'></script>
+<script src='{{ url_for("static", filename="lib/owlcarousel/owl.carousel.min.js")}}'></script>
+<script src='{{ url_for("static", filename="mail/jqBootstrapValidation.min.js")}}'></script>
+<script src='{{ url_for("static", filename="mail/contact.js")}}'></script>
+<script src='{{ url_for("static", filename="js/main.js")}}'></script>
+<script src='{{ url_for("static", filename="js/scripts.js")}}'></script>
+{% endblock %}
+
+
+</html>

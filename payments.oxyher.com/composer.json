@@ -1,0 +1,7 @@
+{
+    "require": {
+        "dwivedianuj9118/phonepe-payment-gateway": "dev-main",
+        "mongodb/mongodb": "^1.20",
+        "firebase/php-jwt": "^6.10"
+    }
+}

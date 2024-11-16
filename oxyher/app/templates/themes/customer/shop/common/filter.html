@@ -1,0 +1,168 @@
+<!-- Filter Modal -->
+<style>
+    /* Filter Modal Styles */
+    .filter-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 1000;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: #333;
+        }
+
+        .filter-modal.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #ff69b4;
+        }
+
+        .modal-header button {
+            background-color: transparent;
+            border: none;
+            color: #333;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .filter-options {
+            padding: 20px;
+        }
+
+        .filter-options label {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .filter-btn, .advanced-filters-btn {
+            background-color: #ff69b4;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            margin-top: 20px;
+        }
+
+        .advanced-filter-options {
+            display: none;
+            padding: 20px;
+        }
+
+        /* Floating Apply Filter Button */
+        .filter-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+</style>
+<div id="filterModal" class="filter-modal">
+    <div class="modal-header">
+        <h2>Filter Options</h2>
+        <button id="closeFilter"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="filter-options" id="filterOptions">
+        <h3>Categories</h3>
+        <label><input type="radio" name="category" value="Menstrual Care"> Menstrual Care</label>
+        <label><input type="radio" name="category" value="Intimate Care"> Intimate Care</label>
+        <label><input type="radio" name="category" value="Personal Care"> Personal Care</label>
+        <label><input type="radio" name="category" value="Kids"> Kids</label>
+
+        <button id="advancedFiltersBtn" class="advanced-filters-btn">Advanced Filters</button>
+    </div>
+
+    <div class="advanced-filter-options" id="advancedFilterOptions">
+        <h3>Colors</h3>
+        <label><input type="checkbox" value="Red"> Red</label>
+        <label><input type="checkbox" value="Blue"> Blue</label>
+        <label><input type="checkbox" value="Green"> Green</label>
+        <label><input type="checkbox" value="Yellow"> Yellow</label>
+        <label><input type="checkbox" value="Pink"> Pink</label>
+
+        <h3>Pack Size</h3>
+        <label><input type="checkbox" value="1"> 1 Pack</label>
+        <label><input type="checkbox" value="2"> 2 Pack</label>
+        <label><input type="checkbox" value="3"> 3 Pack</label>
+        <label><input type="checkbox" value="4"> 4 Pack</label>
+        <label><input type="checkbox" value="5"> 5 Pack</label>
+    </div>
+
+    <button class="filter-btn" id="applyFilterBtn">Apply Filters</button>
+</div>
+
+<!-- <script>
+    
+
+    // Filter modal functionality
+    const filterBtnNavbar = document.getElementById("filterBtnNavbar");
+    const filterModal = document.getElementById("filterModal");
+    const closeFilter = document.getElementById("closeFilter");
+    const applyFilterBtn = document.getElementById("applyFilterBtn");
+
+    filterBtnNavbar.addEventListener("click", function() {
+        filterModal.classList.add("active");
+    });
+
+    closeFilter.addEventListener("click", function() {
+        resetFilters();
+        filterModal.classList.remove("active");
+    });
+
+    applyFilterBtn.addEventListener("click", function() {
+        resetFilters();
+        filterModal.classList.remove("active");
+        alert("Filters applied!");
+    });
+
+    // Toggle advanced filters
+    const advancedFiltersBtn = document.getElementById("advancedFiltersBtn");
+    const advancedFilterOptions = document.getElementById("advancedFilterOptions");
+
+    advancedFiltersBtn.addEventListener("click", function() {
+        if (advancedFilterOptions.style.display === "none") {
+            advancedFilterOptions.style.display = "block";
+            advancedFiltersBtn.textContent = "Hide Advanced Filters";
+        } else {
+            advancedFilterOptions.style
+            advancedFilterOptions.style.display = "none";
+            advancedFiltersBtn.textContent = "Advanced Filters";
+        }
+    });
+
+    // Reset filters function
+    function resetFilters() {
+        const radioButtons = document.querySelectorAll('input[name="category"]');
+        radioButtons.forEach(radio => {
+            radio.checked = false;
+        });
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        advancedFilterOptions.style.display = "none"; // Hide advanced filters
+        advancedFiltersBtn.textContent = "Advanced Filters"; // Reset button text
+    }
+
+    // Initial setup
+    advancedFilterOptions.style.display = "none"; // Hide advanced filter options by default
+</script> -->
+

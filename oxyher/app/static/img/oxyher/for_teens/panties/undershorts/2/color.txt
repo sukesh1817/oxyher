@@ -1,0 +1,15 @@
+Color variations
+
+Black
+
+White
+
+Skin
+
+Black/Skin
+
+Skin/White
+
+White/Black
+
+White/Grey

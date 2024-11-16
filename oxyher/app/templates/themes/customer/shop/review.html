@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block head%}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order review</title>
+
+<link href='{{ url_for("static", filename="css/shop/review.css")}}' rel="stylesheet">
+{% endblock %}
+
+{% block body%}
+<div class="container">
+    <div class="image">
+        <img src='{{ url_for("static", filename="img/layout/success.svg")}}' alt="Illustration Hero">
+    </div>
+    <div class="passage">
+        <h2>Order Summary</h2>
+        <p>This is your order summary, you can order anything you want in this store.</p>
+    </div>
+    <div class="plan">
+        <div class="col-md-12">
+            <div class="music-img row">
+                <img src='{{ url_for("static", filename="img/layout/checkout.png")}}' alt="Image Icon">
+                <div >
+                    <ul class="lst2">
+                        <li>Oxyher pads</li>
+                        <li>Rs 150</li>
+                    </ul>
+    
+                </div>
+            </div>
+    
+            <div class="music-img row">
+                <img src='{{ url_for("static", filename="img/layout/checkout.png")}}' alt="Image Icon">
+                <div >
+                    <ul class="lst2">
+                        <li>Oxyher pads</li>
+                        <li>Rs 150</li>
+                    </ul>
+    
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="btn-proceed"><button onclick="redir()" type="submit">Finish</button></div>
+</div>
+{% endblock %}
+
+{% block tail%}
+<script>
+    function redir() {
+        window.location.href = "/"
+    }
+</script>
+{% endblock %}

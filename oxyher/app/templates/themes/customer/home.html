@@ -1,0 +1,1028 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="utf-8">
+<title>Oxyher | World initimate hygeine website</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href='{{ url_for("static", filename="css/search.css")}}' rel="stylesheet">
+
+<link href='{{ url_for("static", filename="img/favicon.ico")}}' rel="icon">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href='{{ url_for("static", filename="lib/owlcarousel/assets/owl.carousel.min.css")}}' rel="stylesheet">
+
+<link href='{{ url_for("static", filename="css/style.css")}}' rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One&family=Sacramento&display=swap" rel="stylesheet">
+<style>
+    .carousel-font {
+        font-family: "Klee One", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .carousel-item {
+        height: 75vh;
+        /* Default height for larger screens */
+    }
+
+    @media (max-width: 768px) {
+        .carousel-item {
+            height: 60vh;
+            /* For medium and small screens */
+        }
+    }
+
+    @media (max-width: 576px) {
+        .carousel-item {
+            height: 50vh;
+            /* For mobile devices */
+        }
+    }
+
+    .carousel-caption h3 {
+        font-size: 2rem;
+        background-color: none !important;
+
+    }
+
+    .carousel-caption h4 {
+        font-size: 1.25rem;
+        background-color: none !important;
+
+    }
+
+    .btn-sharp {
+        border-radius: 1px;
+    }
+
+    #whatsapp-icon img {
+        width: 50px;
+        /* Adjust the size as needed */
+        height: 50px;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    #whatsapp-icon {
+        position: absolute;
+        top: 10px;
+        /* Initial position */
+        left: 10px;
+        /* Initial position */
+    }
+
+    .top {
+        position: fixed;
+        right: 10px;
+        bottom: 20px;
+        z-index: 11;
+        /* animation: action 1s infinite alternate; */
+    }
+</style>
+<style>
+    /* Style carousel background and text */
+    #oxyherCarousel {
+        /* Set a dark background for contrast */
+        height: 100vh;
+        /* Full screen height */
+    }
+
+    .carousel-caption {
+        top: 50%;
+        background-color: none !important;
+
+    }
+
+    .display-1 {
+        font-size: 6rem;
+        /* Extra large font size for text */
+        color: #ffffff;
+        /* White text */
+    }
+</style>
+
+{% if login %}
+<style>
+    @media (min-width: 576px) {
+        .modal-dialog {
+            max-width: 400px;
+
+            .modal-content {
+                padding: 1rem;
+            }
+        }
+    }
+
+    .modal-header {
+        .close {
+            margin-top: -1.5rem;
+        }
+    }
+
+    .form-title {
+        margin: -2rem 0rem 2rem;
+    }
+
+    .btn-round {
+        border-radius: 3rem;
+    }
+
+    .delimiter {
+        padding: 1rem;
+    }
+
+    .social-buttons {
+        .btn {
+            margin: 0 0.5rem 1rem;
+        }
+    }
+
+    .signup-section {
+        padding: 0.3rem 0rem;
+
+    }
+</style>
+
+{% endif %}
+
+
+<style>
+    .carousel-image {
+        width: 100%;
+        /* Make sure the image takes full width */
+
+        height: auto;
+        /* Maintain aspect ratio */
+        object-fit: cover;
+        /* Cover the area without distortion */
+    }
+</style>
+<style>
+    /* Carousel inner styling */
+    .carousel-inner {
+        height: 100%;
+        background: linear-gradient(135deg, #4a90e2, #9013fe);
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* Dark overlay for text readability */
+    .carousel-inner::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+
+    /* Text styling */
+    #animatedText1 {
+        color: #ffffff;
+        font-size: 5rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        position: relative;
+        z-index: 2;
+        opacity: 2;
+        /* Hidden initially */
+        transition: opacity 0.8s ease, transform 0.5s ease;
+        /* Smooth transition */
+    }
+
+    /* Animation for each letter fade-in */
+    .text-appear {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .text-large {
+        font-size: 6rem;
+        /* Bigger font when the word is fully displayed */
+        transition: font-size 0.3s ease;
+    }
+
+    .text-small {
+        font-size: 4rem;
+        /* Shrinks smoothly */
+    }
+
+    /* Text container padding and alignment */
+    .carousel-caption {
+        bottom: 30%;
+        padding: 2rem;
+        text-align: center;
+    }
+</style>
+
+{% endblock %}
+
+
+
+{% block body %}
+{% include 'themes/customer/common/navbar.html' %}
+
+
+
+<div class="container-fluid mb-5 mt-4">
+    <div class="row px-xl-5 ">
+        <div class="col-lg-12">
+            <div id="headerCarousel" class="carousel slide carousel-fade rounded" data-bs-ride="carousel"
+                data-bs-interval="3000">
+                <div id="oxyherCarousel" class="carousel slide rounded" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active rounded">
+                            <div
+                                class="carousel-caption d-flex flex-column align-items-center justify-content-center rounded">
+                                <div class="p-3 caption-content rounded">
+                                    <h1 id="animatedText1" class="display-1 text-white fw-bold mb-4 carousel-font ">
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-6 col-md-12 col-sm-6 pb-1 custom-br">
+            <div class="cat-item d-flex flex-column border mb-4 custom-br" style="padding: 30px;">
+                <p class="text-right">15 Products</p>
+                <a href="{{url_for('shop.home', c_='menstrual_care_products')}}"
+                    class="cat-img position-relative overflow-hidden mb-3">
+                    <img class="img-fluid"
+                        src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="bio degradable snitary pads">
+                </a>
+                <h5 class="font-weight-semi-bold m-0">Menstrual care</h5>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12 col-sm-6 pb-1 custom-br">
+            <div class="cat-item d-flex flex-column border mb-4 custom-br" style="padding: 30px;">
+                <p class="text-right">15 Products</p>
+                <a href="{{url_for('shop.home', c_='intimate_care_products')}}"
+                    class="cat-img position-relative overflow-hidden mb-3">
+                    <img class="img-fluid"
+                        src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/reusable_pads/6/reusable_sanitary_pads_pack_side.webp")}}'
+                        alt="reusable sanitary pads">
+                </a>
+                <h5 class="font-weight-semi-bold m-0">Intimate care</h5>
+            </div>
+        </div>
+    </div>
+    <div class="row px-xl-5 pb-3 custom-br justify-content-between">
+        <div class="col-lg-6 col-md-12 pb-1 custom-br">
+            <div class="cat-item d-flex flex-column border mb-4 custom-br" style="padding: 30px;">
+                <p class="text-right">15 Products</p>
+                <a href="{{url_for('shop.home', c_='personal_care_products')}}"
+                    class="cat-img position-relative overflow-hidden mb-3">
+                    <img class="img-fluid" src='{{ url_for("static", filename="img/oxyher/femi_pads/femi_pad_2.webp")}}'
+                        alt="femi sanitary pads">
+                </a>
+                <h5 class="font-weight-semi-bold m-0">Personal care</h5>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 pb-1 custom-br">
+            <div class="cat-item d-flex flex-column border mb-4 custom-br" style="padding: 30px;">
+                <p class="text-right">15 Products</p>
+                <a href='{{url_for("shop.home", c_="kids_care_products")}}'
+                    class="cat-img position-relative overflow-hidden mb-3">
+                    <img class="img-fluid"
+                        src='{{ url_for("static", filename="img/oxyher/cup_wash/menstrual_cup_wash_side.webp")}}'
+                        alt="menstrual cup wash">
+                </a>
+                <h5 class="font-weight-semi-bold m-0">Kids care</h5>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- <div class="container-fluid offer pt-5">
+    <div class="row px-xl-5">
+        <div class="col-md-12 col-lg-6 pb-4">
+            <div class="position-relative d-flex align-items-center">
+
+                <div class="text-md-left text-sm-left text-white py-5 px-3 col-lg-6 col-md-12">
+                    <div class="position-relative" style="z-index: 1;">
+                        <h5 class="text-uppercase text-primary mb-3">with easy way</h5>
+                        <h5 class="mb-4 font-weight-semi-bold">Intimate hygiene</h5>
+                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+                    </div>
+                </div>
+
+                <div class="text-md-left text-sm-left text-lg-left col-lg-6 col-md-12">
+                    <img style="height: 170px; border-top-left-radius:10px;"
+                        src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-6 pb-4">
+            <div class="position-relative d-flex align-items-center">
+                <div class="col-md-6">
+                    <img style="height: 170px; border-top-left-radius:10px;"
+                        src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="">
+                </div>
+
+                <div class="text-md-right text-sm-right text-white py-5 px-3 col-md-6">
+                    <div class="position-relative" style="z-index: 1;">
+                        <h5 class="text-uppercase text-primary mb-3">with easy way</h5>
+                        <h5 class="mb-4 font-weight-semi-bold">Intimate hygiene</h5>
+                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div> -->
+
+
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Trendy Products</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3">
+        {% for temp_sec_1 in sec_1 %}
+        {% for product in temp_sec_1%}
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/{{ product['product_id']}}">
+                        <img class="img-fluid w-100" src='https://img.oxyher.com/{{ product["img_url"][0]}}'
+                            alt="{{ product['display_name']}}">
+                    </a>
+
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">{{ product['display_name']}}</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>{{ product['price'] | int }} Rs</h6>
+                        <!-- <h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/{{ product['product_id']}}" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="https://oxyher.com/shop/p/{{ product['product_id']}}" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+
+    </div>
+</div>
+
+<!--SEC_1-->
+<!-- <div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Trendy Products</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/5L0B1CycbhFy">
+                        <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="/img/oxyher/pee_safe_sanitary_pads/don_not_use/biodegradble_night/Biodegradable_Panty_Liners_Bamboo_10_N_315mm_overnight.webp")}}'
+                            alt="bio degradable pantry liners overnight">
+                    </a>
+
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Biodegradable pads</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>299 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/5L0B1CycbhFy" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/W1k4Ly2Vif6y">
+                        <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/don_not_use/biodegradble_regular/Biodegradable_Panty_Liners_Bamboo_10_N_280mm_Regular_side.webp")}}'
+                            alt="bio degradable pantry liners regular">
+                    </a>
+
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Biodegradable regular</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>299 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/W1k4Ly2Vif6y" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/940Vvge3YqIC">
+                        <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/don_not_use/biodegradble_subscription/Biodegradable_Sanitary_Pads_quarterly_Pack_1.webp")}}'
+                            alt="">
+                    </a>
+
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Bio degradable subcription</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>199 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/940Vvge3YqIC" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/yEwudQSAV588"> <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/don_not_use/ultra_thin_sanitary_pads/Ultra_Thin_Sanitary_Pads_30_Pcs_XXL_312mm.webp")}}'
+                            alt="ultra thin sanitary pads"></a>
+
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Ultra thin sanitary pads</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>199 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/yEwudQSAV588" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/xbR5jV0B04ho">
+                        <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/don_not_use/ultrathin_sanitary_pad_less_quan/Ultra_thin_Sanitary_Pads_12_pcs_XXL_312_mm_side_Box_with_product.webp")}}'
+                            alt="ultra thin sanitary pads thin">
+                    </a>
+
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Ultra thin <small>(small pack)</small></h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>199 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/xbR5jV0B04ho" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/lGhmHtO4WwZn">
+                        <img class="img-fluid w-100"
+                            src="{{ url_for('static', filename='img/oxyher/pee_safe_sanitary_pads/resuble_six/RS_pads_side_1eb8e596-6e9f-4d1b-a7d3-0e6e40f5f99e.webp') }}"
+                            alt="reusable sanitary pads">
+                    </a>
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Reusable six pads</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>199 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/lGhmHtO4WwZn" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/YLiFHFhjzcP4">
+                        <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="img/oxyher/pee_safe_menstrual_cups/reusable_pee_safe_front.webp")}}'
+                            alt="menstrual cup wash">
+                    </a>
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Menstrual cups</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>299 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/YLiFHFhjzcP4" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/a4wSdn6NNNqt">
+                        <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="img/oxyher/femi_pads/femi_pad_1.webp")}}'
+                            alt="femi single pads pack">
+                    </a>
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Femi pads (single)</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>249 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/a4wSdn6NNNqt" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Just arrived</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3">
+        {% for temp_sec_2 in sec_2 %}
+        {% for product in temp_sec_2 %}
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/{{ product['product_id']}}">
+                        <img class="img-fluid w-100" src='https://img.oxyher.com/{{ product["img_url"][0]}}'
+                            alt="{{ product['display_name']}}">
+                    </a>
+
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">{{ product['display_name']}}</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>{{ product['price'] | int }} Rs</h6>
+                        <!-- <h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/{{ product['product_id']}}" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="https://oxyher.com/shop/p/{{ product['product_id']}}" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+
+    </div>
+</div>
+
+<!--SEC_2-->
+<!-- <div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Just Arrived</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/RDyXyz8syHIK">
+                        <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="img/oxyher/365_veda_ashwagandha_strip/51UwPz9BJyL._SX679_.jpg")}}'
+                            alt="veda ashwagandha strip">
+                    </a>
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Veda ashwagandha strip</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>550 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/RDyXyz8syHIK" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/nL56OIoqMeSD">
+                        <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="img/oxyher/nova_releif_spray/outdoor.webp")}}'
+                            alt="nova relif spary">
+                    </a>
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Novy relif spary</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>486 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/nL56OIoqMeSD" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/nXffVcE5NhEu">
+                        <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="img/oxyher/cup_wash/menstrual_cup_wash_front.webp")}}'
+                            alt="menstrual cup wash">
+                    </a>
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Menstrual cup wash</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>199 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/nXffVcE5NhEu" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/a4wSdn6NNNqt">
+                        <img class="img-fluid w-100"
+                            src='{{ url_for("static", filename="img/oxyher/femi_pads/femi_pad_2.webp")}}'
+                            alt="femi pads">
+                    </a>
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Femi pads pack</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6 class="text-danger">Out of stock</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/a4wSdn6NNNqt" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/qVGpNKhY3FIk">
+                        <img class="img-fluid w-100"
+                            src='https://img.oxyher.com/medicines/medicine_spray/e2bc4d8378ed4e46900276744a4326aa.webp'
+                            alt="ultra thin sanitary pads">
+                    </a>
+
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Cramp Relief Roll On</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>199.0 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/qVGpNKhY3FIk" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/KH5CKzvXoHSC">
+                        <img class="img-fluid w-100"
+                            src='https://img.oxyher.com/medicines/medicine_spray/44d837532b2a4bbf92dc4938eda27862.webp'
+                            alt="bio degradable subscription pads">
+                    </a>
+
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Toilet Seat Sanitizer Spray</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>180.0 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/KH5CKzvXoHSC" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/cZkGgH8TXPXu">
+                        <img class="img-fluid w-100"
+                            src='https://img.oxyher.com/medicines/medicine_spray/7efd75da39334231ba3284b959c97c32.webp'
+                            alt="bio degradable pads night">
+                    </a>
+
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Undergarment Liquid Wash</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>250.0 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/cZkGgH8TXPXu" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <a href="https://oxyher.com/shop/p/rqhw3WBtQjgf">
+                        <img class="img-fluid w-100"
+                            src='https://img.oxyher.com/medicines/medicine_stripes/d85cc8893ea44f9a9499f764093a2594.webp'
+                            alt="reusable menstrual cup">
+                    </a>
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">Acne Relief Patches</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>299.0 Rs</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="https://oxyher.com/shop/p/rqhw3WBtQjgf" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+
+<!-- <div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="owl-carousel vendor-carousel">
+                <div class="vendor-item border p-4">
+                    <img src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="">
+                </div>
+                <div class="vendor-item border p-4">
+                    <img src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
+                        alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+{% if login %}
+
+<div class="container">
+    <div style="overflow: hidden; padding-right: 0px;" class="modal-open modal fade" id="loginModal" tabindex="-1"
+        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content" style="border-radius: 4px;">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="exampleModalLabel">Sign In or Sign Up</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Dear customer, you need to sign in to use certain features. Please sign in to
+                        explore products and functionalities.</p>
+                    <div class="d-flex flex-column text-center">
+                        <a href="{{url_for('auth.signin')}}" class="btn btn-primary btn-block  text-white"
+                            style="border-radius: 4px;">Sign In</a>
+                        <a href="{{url_for('auth.signup')}}" class="btn btn-primary btn-block  text-white mt-2"
+                            style="border-radius: 4px;">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% include 'themes/customer/common/footbar.html' %}
+
+
+
+
+<a href="https://wa.me/+917598454537?text=Want to buy products" class="top">
+    <img src='{{ url_for("static", filename="img/ico/whatsapp.svg")}}' alt="">
+
+</a>
+
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block tail %}
+
+
+<!-- Include Bootstrap JS and Popper.js for components -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src='{{ url_for("static", filename="lib/easing/easing.min.js")}}'></script>
+<script src='{{ url_for("static", filename="lib/owlcarousel/owl.carousel.min.js")}}'></script>
+<script src='{{ url_for("static", filename="mail/jqBootstrapValidation.min.js")}}'></script>
+<script src='{{ url_for("static", filename="mail/contact.js")}}'></script>
+<script src='{{ url_for("static", filename="js/main.js")}}'></script>
+<script src='{{ url_for("static", filename="js/scripts.js")}}'></script>
+<script src='{{ url_for("static", filename="js/search.js")}}'></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const oxyherText = "OXYHER";
+        const animationDelay = 500; // Delay for each individual letter
+        const fullTextDelay = 2000; // Delay for the full word "OXYHER"
+
+        function animateText(elementId, text) {
+            const element = document.getElementById(elementId);
+            let currentIndex = 0;
+
+            function showLetterByLetter() {
+                if (currentIndex < text.length) {
+                    element.classList.remove("text-small");
+                    element.classList.add("text-large");
+                    element.textContent = text[currentIndex];
+                    currentIndex++;
+                    setTimeout(showLetterByLetter, animationDelay);
+                } else {
+                    element.textContent = text;
+                    element.classList.remove("text-large");
+                    element.classList.add("text-small");
+                    setTimeout(() => {
+                        currentIndex = 0;
+                        showLetterByLetter();
+                    }, fullTextDelay);
+                }
+            }
+
+            showLetterByLetter();
+        }
+
+        animateText("animatedText1", oxyherText);
+    });
+</script>
+
+{% if login %}
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#loginModal').modal('show');
+        }, 1000);
+        $('[data-toggle="tooltip"]').tooltip();
+        setTimeout(function () {
+            $('#tooltipBtn').tooltip('show');
+        }, 1500);
+    });
+</script>
+{% endif%}
+
+
+{% endblock %}

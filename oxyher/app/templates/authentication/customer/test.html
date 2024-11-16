@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>User Profile - Women’s E-commerce</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background for the entire page */
+            font-family: 'Arial', sans-serif;
+        }
+        .profile-container {
+            background-color: #ffffff; /* White background for profile card */
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px auto;
+            max-width: 1200px; /* Limit width for larger screens */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .profile-header svg {
+            border-radius: 50%;
+            width: 120px; /* Profile picture size */
+            height: 120px;
+            margin-bottom: 15px; /* Add space below the SVG */
+        }
+        .profile-header h2 {
+            color: #d81b60; /* Dark pink for headings */
+            font-weight: 700;
+        }
+        .profile-header p {
+            color: #6c757d; /* Gray for the email */
+            font-size: 1.1rem;
+        }
+        .section-title {
+            color: #d81b60; /* Darker pink for section headings */
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+        .list-group-item {
+            background-color: #e9ecef; /* Light gray for item boxes */
+            border: none; /* Remove border */
+            border-radius: 10px;
+            margin: 5px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+        .list-group-item a {
+            color: #d81b60; /* Dark pink for links */
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .list-group-item a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="profile-container">
+        <div class="profile-header">
+            <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="60" r="60" fill="#4a90e2" /> <!-- Light blue background -->
+                <path d="M60 75c-20 0-30-10-30-10s0 25 30 25 30-25 30-25-10 10-30 10z" fill="#ffffff"/>
+                <circle cx="60" cy="50" r="25" fill="#ffffff"/>
+            </svg>
+            <h2 class="mt-3">Jane Doe</h2>
+            <p class="text-muted">jane.doe@example.com</p>
+        </div>
+        
+        <div class="profile-info">
+            <h5 class="section-title">Contact Information</h5>
+            <ul class="list-group">
+                <li class="list-group-item">Phone: <strong>(123) 456-7890</strong></li>
+                <li class="list-group-item">Email: <strong>jane.doe@example.com</strong></li>
+                <li class="list-group-item">Home Address: <strong>123 Main St, City, Country</strong></li>
+            </ul>
+        </div>
+
+        <div class="order-list">
+            <h5 class="section-title">Order History</h5>
+            <ul class="list-group">
+                <li class="list-group-item">Order #12345 - Femi Pads - <strong>Delivered</strong> on 2023-09-01</li>
+                <li class="list-group-item">Order #12346 - Menstrual Cups - <strong>Delivered</strong> on 2023-08-25</li>
+                <li class="list-group-item">Order #12347 - Reusable Pads - <strong>In Transit</strong></li>
+            </ul>
+        </div>
+
+        <div class="saved-items">
+            <h5 class="section-title">Saved Items</h5>
+            <ul class="list-group">
+                <li class="list-group-item">Organic Cotton Menstrual Cup - <a href="#">View</a></li>
+                <li class="list-group-item">Reusable Sanitary Pads - <a href="#">View</a></li>
+                <li class="list-group-item">Biodegradable Night Pads - <a href="#">View</a></li>
+            </ul>
+        </div>
+
+        <div class="account-settings">
+            <h5 class="section-title">Account Settings</h5>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="#">Change Password</a></li>
+                <li class="list-group-item"><a href="#">Manage Addresses</a></li>
+                <li class="list-group-item"><a href="#">Payment Methods</a></li>
+            </ul>
+        </div>
+
+        <div class="additional-features">
+            <h5 class="section-title">Additional Features</h5>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="#">Newsletter Preferences</a></li>
+                <li class="list-group-item"><a href="#">Loyalty Points</a></li>
+                <li class="list-group-item"><a href="#">Product Reviews</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

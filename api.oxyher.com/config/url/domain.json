@@ -1,0 +1,7 @@
+{
+    "IMG_URL":"https://img.oxyher.com/",
+    "MAIN_URL":"https://oxyher.com/",
+    "PRODUCT_URL":"https://oxyher.com/shop/p/",
+    "SESSION_URL":"https://oxyher.com/auth/get_sess_id",
+    "ADD_CART_URL":"https://oxyher.com/shop/add_cart/"
+}

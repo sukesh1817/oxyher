@@ -1,0 +1,600 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="utf-8">
+<title>Oxyher - Cart</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="Free HTML Templates" name="keywords">
+<meta content="Free HTML Templates" name="description">
+<link href='{{ url_for("static", filename="img/favicon.ico")}}' rel="icon">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href='{{ url_for("static", filename="lib/owlcarousel/assets/owl.carousel.min.css")}}' rel="stylesheet">
+<link href='{{ url_for("static", filename="css/style.css")}}' rel="stylesheet">
+
+<style>
+    #dialog::backdrop {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    #dialog {
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+</style>
+<style>
+    .title {
+        margin-bottom: 5vh;
+    }
+
+    .card {
+        margin: auto;
+        max-width: 950px;
+        width: 100%;
+        /* box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+
+        border: transparent;
+        border-radius: 1px;
+    }
+
+    @media(max-width:767px) {
+        .card {
+            margin: 3vh auto;
+        }
+    }
+
+    .cart {
+        background-color: #fff;
+        padding: 4vh 5vh;
+        border-bottom-left-radius: 1rem;
+        border-top-left-radius: 1rem;
+    }
+
+    @media(max-width:767px) {
+        .cart {
+            padding: 4vh;
+            border-bottom-left-radius: unset;
+            border-top-right-radius: 1rem;
+        }
+    }
+
+    .summary {
+        /* background-color: #efeeee; */
+        border-radius: 1px;
+        border-bottom-left-radius: 1px;
+        padding: 4vh;
+        color: rgb(65, 65, 65);
+    }
+
+    @media(max-width:767px) {
+        .summary {
+            border-radius: 1px;
+        }
+    }
+
+    .summary .col-2 {
+        padding: 0;
+    }
+
+    .summary .col-10 {
+        padding: 0;
+    }
+
+    .row {
+        margin: 0;
+    }
+
+    .title b {
+        font-size: 1.5rem;
+    }
+
+    .main {
+        margin: 0;
+        padding: 2vh 0;
+        width: 100%;
+    }
+
+    .col-2,
+    .col {
+        padding: 0 1vh;
+    }
+
+    a {
+        padding: 0 1vh;
+    }
+
+    .close {
+        margin-left: auto;
+        font-size: 0.7rem;
+    }
+
+    img {
+        width: 3.5rem;
+    }
+
+    .back-to-shop {
+        margin-top: 4.5rem;
+    }
+
+    h5 {
+        margin-top: 4vh;
+    }
+
+    hr {
+        margin-top: 1.25rem;
+    }
+
+    form {
+        padding: 2vh 0;
+    }
+
+    select {
+        border: 1px solid rgba(0, 0, 0, 0.137);
+        padding: 1.5vh 1vh;
+        margin-bottom: 4vh;
+        outline: none;
+        width: 100%;
+        background-color: rgb(247, 247, 247);
+    }
+
+    input {
+        border: 1px solid rgba(0, 0, 0, 0.137);
+        padding: 1vh;
+        margin-bottom: 4vh;
+        outline: none;
+        width: 100%;
+        background-color: rgb(247, 247, 247);
+    }
+
+    input:focus::-webkit-input-placeholder {
+        color: transparent;
+    }
+
+
+    .btn:focus {
+        box-shadow: none;
+        outline: none;
+        box-shadow: none;
+        color: white;
+        -webkit-box-shadow: none;
+        -webkit-user-select: none;
+        transition: none;
+    }
+
+    .btn:hover {
+        color: white;
+    }
+
+    a {
+        color: black;
+    }
+
+    a:hover {
+        color: black;
+        text-decoration: none;
+    }
+
+    #code {
+        background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+        background-repeat: no-repeat;
+        background-position-x: 95%;
+        background-position-y: center;
+    }
+
+    .zoom-image {
+        width: 100%;
+        /* Responsive image */
+        transition: transform 0.5s ease;
+        /* Smooth transition */
+    }
+
+
+    @media (min-width: 768px) {
+        .zoom-image {
+            max-height: 120px;
+            /* Adjust this value based on your design */
+        }
+
+        .title h4 {
+            font-size: 1.5rem;
+            /* Increase title size on larger screens */
+        }
+    }
+
+    @media (max-width: 767px) {
+        .back-to-shop {
+            margin-top: 1rem;
+        }
+    }
+</style>
+
+
+<style>
+    .button {
+        appearance: none;
+        background-color: #fafbfc;
+        border: 1px solid rgba(27, 31, 35, 0.15);
+        color: #24292e;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        list-style: none;
+        padding: 6px 10px;
+        position: relative;
+        transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        white-space: nowrap;
+        word-wrap: break-word;
+        margin-right: 5px;
+    }
+
+    .button:hover {
+        background-color: #f3f4f6;
+        text-decoration: none;
+
+    }
+
+    .button:disabled {
+        background-color: #fafbfc;
+        border-color: rgba(27, 31, 35, 0.15);
+        color: #959da5;
+        cursor: default;
+    }
+
+    .button:active {
+        background-color: #edeff2;
+        box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+        transition: none 0s;
+    }
+
+    .button:focus {
+        outline: 1px transparent;
+    }
+
+    .button:before {
+        display: none;
+    }
+
+    .button:-webkit-details-marker {
+        display: none;
+    }
+</style>
+
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+    :root {
+        --vs-primary: 29 92 255;
+    }
+
+    /*Dialog Styles*/
+    dialog {
+        padding: 1rem 3rem;
+        background: white;
+        width: 90%;
+        /* Use percentage for responsiveness */
+        max-width: 600px;
+        /* Max width to limit size */
+        padding-top: 2rem;
+        border-radius: 4px;
+        border: 0;
+        box-shadow: 0 5px 30px 0 rgb(0 0 0 / 10%);
+        animation: fadeIn 1s ease both;
+
+        &::backdrop {
+            animation: fadeIn 1s ease both;
+            background: rgb(255 255 255 / 40%);
+            z-index: 2;
+            backdrop-filter: blur(2px);
+        }
+
+        .x {
+            filter: grayscale(1);
+            border: none;
+            background: none;
+            position: absolute;
+            top: 15px;
+            right: 10px;
+            transition: ease filter, transform 0.3s;
+            cursor: pointer;
+            transform-origin: center;
+
+            &:hover {
+                filter: grayscale(0);
+                transform: scale(1.1);
+            }
+        }
+
+        h2 {
+            font-weight: 600;
+            font-size: 2rem;
+            padding-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.3rem;
+            padding: 0.5rem 0;
+
+            a {
+                &:visited {
+                    color: rgb(var(--vs-primary));
+                }
+            }
+        }
+    }
+
+    button.primary {
+        display: inline-block;
+        font-size: 0.8rem;
+        color: #fff !important;
+        background: rgb(var(--vs-primary) / 100%);
+        padding: 13px 25px;
+        border-radius: 17px;
+        transition: background-color 0.1s ease;
+        box-sizing: border-box;
+        transition: all 0.25s ease;
+        border: 0;
+        cursor: pointer;
+        box-shadow: 0 10px 20px -10px rgb(var(--vs-primary) / 50%);
+
+        &:hover {
+            box-shadow: 0 20px 20px -10px rgb(var(--vs-primary) / 50%);
+            transform: translateY(-5px);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+
+    @media (max-width: 576px) {
+        dialog {
+            width: 95%;
+            /* Wider for small screens */
+            padding: 1rem;
+            /* Reduce padding */
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            /* Adjust heading size */
+        }
+
+        p {
+            font-size: 0.9rem;
+            /* Adjust paragraph size */
+        }
+
+        button.primary {
+            padding: 10px 20px;
+            /* Smaller padding for buttons */
+        }
+
+        .x {
+            top: 10px;
+            /* Adjust close button position */
+            right: 10px;
+            /* Keep it consistent */
+        }
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .sum {
+        position: fixed;
+    }
+</style>
+
+
+{% endblock %}
+
+
+
+{% block body %}
+
+{% include 'themes/customer/common/navbar.html' %}
+
+
+
+<div class="card">
+    <div class="row">
+        <div class="col-lg-8 col-md-12 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="border-bottom">
+                        <h4>Shopping Cart
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                    class="bi bi-bag" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
+                                </svg>
+                            </span>
+                        </h4>
+                    </div>
+                    <div id="tot" class="col text-right text-muted mt-2"></div>
+                </div>
+            </div>
+            {% set l = products | length %}
+            {% for product in products %}
+            <div id='{{ product["product_id"] }}' class="row border-bottom mb-3">
+                <div class="row main align-items-center">
+                    <div class="col-4 col-sm-3 col-md-3">
+                        <img class="img-fluid zoom-image rounded" src='{{ img_url ~ product["img_url"][0] }}'>
+                    </div>
+                    <div class="col-8 col-sm-6 col-md-6 col-lg-6">
+                        <div class="row">
+                            <h5 class="row">{{ product["display_name"] }}</h5>
+                            <br>
+                            <p class="row">{{ product["brand"] }}</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px;" class="col-lg-12 col-sm-3 col-md-12">
+                        <span> <b>{{ product["price"] }} Rs</b></span>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <div class="d-flex align-items-center">
+                                <button data-id="{{ product['product_id'] }}" id="decrease-quantity-{{ loop.index }}"
+                                    class="button rounded decrease-quantity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-dash-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                    </svg>
+                                </button>
+                                <input type="number" data-id="{{ product['product_id'] }}"
+                                    id="quantity-display-{{ loop.index }}" value="{{ product['qty'] }}"
+                                    class="d-inline-flex button border border-0 quantity-display mx-2 my-3 l"
+                                    style="width: 50px; text-align: center;" />
+                                <button data-id="{{ product['product_id'] }}" id="increase-quantity-{{ loop.index }}"
+                                    class="button rounded increase-quantity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                        <path
+                                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <button onclick="window.dialog.showModal();" data-id="{{ product['product_id'] }}"
+                                class="btn btn-danger rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                    <path
+                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+            {% if l == 0 %}
+            <div class="my-5 text-center">
+                <i class="bi bi-cart-x display-3 text-secondary mb-3"></i>
+                <h3 class="text-body-emphasis">Nothing found in the cart</h3>
+                <p class="text-muted">Looks like you haven't added anything yet!</p>
+                <a style="border-radius: 4px;" href="{{ url_for('shop.home')}}" class="btn btn-primary mt-3">Go to
+                    shop</a>
+            </div>
+            {% else %}
+            <input id="t" type="hidden" value="{{ l }}">
+            <div class="back-to-shop">
+                <a href="{{url_for('shop.home')}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-arrow-left">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+
+                    <span class="text-muted">Back to shop</span>
+                </a>
+            </div>
+            {% endif %}
+
+
+
+        </div>
+
+
+        {% if l != 0 %}
+
+        <div class="sticky-top card mt-3 col-lg-4 col-md-4">
+            <h5><b>Move to shipping</b></h5>
+            <hr>
+            <div>
+                <small>Move to shipping to see your order details</small>
+            </div>
+            <a href="{{ url_for('shop.shipping') }}" style="border-radius: 4px;"
+                class="btn btn-primary btn-block mt-3 text-white custom-br">Go to shipping</a>
+        </div>
+        {% endif %}
+
+
+    </div>
+</div>
+
+
+
+<div id="overlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
+
+<dialog id="dialog" style="border: none; border-radius: 10px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); padding: 25px; max-width: 420px; font-family: Arial, sans-serif;">
+
+    <h4 class="my-1 text-danger" style="font-size: 1.4rem; font-weight: 700; color: #d9534f; margin-top: 10px;">Are you sure?</h4>
+    <h5 style="font-size: 1rem; font-weight: 400; color: #555;">Do you want to delete this product?</h5>
+
+    <input type="hidden" id="del_p" value="">
+
+    <div class="my-3 text-center">
+        <p id="p_nam" class="font-weight-bold" style="font-size: 1.1rem; color: #333; margin-top: 8px;"></p>
+        <img id="dig_img" src="" alt="" style="width: 100px; height: 100px; border-radius: 8px; margin-top: 5px;">
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <button id="yes_jnd" class="btn btn-success px-4 py-2" style="border-radius: 6px; font-size: 0.95rem; font-weight: 600; text-transform: uppercase;">Yes, delete</button>
+        <button id="no_ew" class="btn btn-danger px-4 py-2" onclick="closeDialog()" style="border-radius: 6px; font-size: 0.95rem; font-weight: 600; text-transform: uppercase;">No, cancel</button>
+    </div>
+</dialog>
+
+
+<a href="#" class="btn btn-primary back-to-top text-white"><i class="fa fa-angle-double-up"></i></a>
+
+{% include 'themes/customer/common/footbar.html' %}
+
+{% endblock %}
+
+
+
+{% block tail %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src='{{ url_for("static", filename="lib/easing/easing.min.js")}}'></script>
+<script src='{{ url_for("static", filename="lib/owlcarousel/owl.carousel.min.js")}}'></script>
+<script src='{{ url_for("static", filename="mail/jqBootstrapValidation.min.js")}}'></script>
+<script src='{{ url_for("static", filename="mail/contact.js")}}'></script>
+<script src='{{ url_for("static", filename="js/main.js")}}'></script>
+<script src='{{ url_for("static", filename="js/shop/cart.js")}}'></script>
+
+
+
+{% endblock %}

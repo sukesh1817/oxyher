@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+
+
+
+
+{% block head %}
+
+<title>Products</title>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+	name='viewport' />
+<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+<link rel="stylesheet" href="/static/assets/css/ready.css">
+<link rel="stylesheet" href="/static/assets/css/demo.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
+	rel="stylesheet">
+<style>
+	.mt-man{
+		margin-top: 100px;
+	}
+</style>
+
+
+{% endblock %}
+
+{% block body %}
+
+<div class="wrapper">
+
+	{% include "themes/seller/common/navbar.html" %}
+	{% include "themes/seller/common/sidebar.html" %}
+
+
+
+
+	<!-- <div class="content">
+			<div class="container-fluid">
+				<h4 class="page-title">Product managment</h4>
+				<div class="row">
+					<div class="col-md-6 col-lg-12">
+						<div class="card">
+							<div class="card-header">
+								<div class="card-title">Base Form Control</div>
+							</div>
+							<div class="card-body">
+								<div class="form-group">
+									<label for="email">Email Address</label>
+									<input type="email" class="form-control" id="email" placeholder="Enter Email">
+									<small id="emailHelp" class="form-text text-muted">We'll never share your email
+										with anyone else.</small>
+								</div>
+								<div class="form-group">
+									<label for="password">Password</label>
+									<input type="password" class="form-control" id="password" placeholder="Password">
+								</div>
+								<div class="form-group form-inline">
+									<label for="inlineinput" class="col-md-3 col-form-label">Inline Input</label>
+									<div class="col-md-9 p-0">
+										<input type="text" class="form-control input-full" id="inlineinput"
+											placeholder="Enter Input">
+									</div>
+								</div>
+								<div class="form-group has-success">
+									<label for="successInput">Success Input</label>
+									<input type="text" id="successInput" value="Success" class="form-control">
+								</div>
+								<div class="form-group has-error has-feedback">
+									<label for="errorInput">Error Input</label>
+									<input type="text" id="errorInput" value="Error" class="form-control">
+									<small id="emailHelp" class="form-text text-muted">Please provide a valid
+										informations.</small>
+								</div>
+								<div class="form-group">
+									<label for="disableinput">Disable Input</label>
+									<input type="text" class="form-control" id="disableinput" placeholder="Enter Input"
+										disabled>
+								</div>
+								<div class="form-check">
+									<label>Gender</label><br />
+									<label class="form-radio-label">
+										<input class="form-radio-input" type="radio" name="optionsRadios" value=""
+											checked="">
+										<span class="form-radio-sign">Male</span>
+									</label>
+									<label class="form-radio-label ml-3">
+										<input class="form-radio-input" type="radio" name="optionsRadios" value="">
+										<span class="form-radio-sign">Female</span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label class="control-label">
+										Static
+									</label> 
+									<p class="form-control-static">hello@themekita.com</p> 
+								</div>
+								<div class="form-group">
+									<label for="exampleFormControlSelect1">Example select</label>
+									<select class="form-control" id="exampleFormControlSelect1">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="exampleFormControlSelect2">Example multiple select</label>
+									<select multiple class="form-control" id="exampleFormControlSelect2">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="exampleFormControlFile1">Example file input</label>
+									<input type="file" class="form-control-file" id="exampleFormControlFile1">
+								</div>
+								<div class="form-group">
+									<label for="comment">Comment</label>
+									<textarea class="form-control" id="comment" rows="5">
+
+											</textarea>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+										<input class="form-check-input" type="checkbox" value="">
+										<span class="form-check-sign">Agree with terms and conditions</span>
+									</label>
+								</div>
+							</div>
+							<div class="card-action">
+								<button class="btn btn-success">Submit</button>
+								<button class="btn btn-danger">Cancel</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div> -->
+		<div class="main-panel">
+			<div class="container mt-man">
+				<div class="row">
+					<div class="col-md-3">
+						<div class="card mx-3 mb-3">
+							<div class="card-body">
+								<h5 class="card-title">Add Product</h5>
+								<h6 class="card-subtitle mb-2 text-body-secondary">Add New</h6>
+								<p class="card-text">Add new products to your inventory easily.</p>
+								<a href="{{ url_for('seller.add_products')}}" class="card-link">Add Product</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="card mx-3 mb-3">
+							<div class="card-body">
+								<h5 class="card-title">Update Product</h5>
+								<h6 class="card-subtitle mb-2 text-body-secondary">Modify Existing</h6>
+								<p class="card-text">Update details of existing products.</p>
+								<a href="{{ url_for('seller.edit_products')}}" class="card-link">Update Product</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="card mx-3 mb-3">
+							<div class="card-body">
+								<h5 class="card-title">View Products</h5>
+								<h6 class="card-subtitle mb-2 text-body-secondary">View your Products</h6>
+								<p class="card-text">View the products that are available.</p>
+								<a href="{{ url_for('seller.view_products')}}" class="card-link">View Product</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="card mx-3 mb-3">
+							<div class="card-body">
+								<h5 class="card-title">Delete Product</h5>
+								<h6 class="card-subtitle mb-2 text-body-secondary">Remove Products</h6>
+								<p class="card-text">Remove products that are no longer available.</p>
+								<a href="{{ url_for('seller.delete_products')}}" class="card-link">Delete Product</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+</div>
+
+{% endblock %}
+
+{% block tail %}
+
+<script src="/static/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="/static/assets/js/core/popper.min.js"></script>
+<script src="/static/assets/js/core/bootstrap.min.js"></script>
+<script src="/static/assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="/static/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<script src="/static/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="/static/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="/static/assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="/static/assets/js/ready.min.js"></script>
+<script src="/static/assets/js/demo.js"></script>
+
+<script>
+	$(function () {
+		$("#slider").slider({
+			range: "min",
+			max: 100,
+			value: 40,
+		});
+		$("#slider-range").slider({
+			range: true,
+			min: 0,
+			max: 500,
+			values: [75, 300]
+		});
+	});
+</script>
+{% endblock %}
