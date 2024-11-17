@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from .class_files import shop_class
 from .class_files import user_class
 import random, string
+from cryptography.fernet import Fernet
 
 
 def add_cart(product_id, qty):
@@ -12,7 +13,7 @@ def add_cart(product_id, qty):
         return response
 
 
-def get_products(method, p_id=None, cart=None):
+def get_products(method, p_id=None, cart=None, category=None):
     shop = shop_class.shop()
     if method == "ALL":
         products = shop.get_products_func()
@@ -20,6 +21,10 @@ def get_products(method, p_id=None, cart=None):
     elif method == "SINGLE":
         product = shop.get_individual_product_func(p_id)
         return product
+    elif method == "CATEGORY":
+        product = shop.get_products_using_db_func(category)
+        return product
+    
     elif method == "CART":
         try:
             product = []
@@ -111,7 +116,7 @@ def make_new_order(auth_key):
 
 def get_random_products():
     shop = shop_class.shop()
-    
+
     # Get the random products from ddifferent databases.
     random_products_1 = shop.get_random_products_func("medicines")
     random_products_2 = shop.get_random_products_func("inner_wears")
@@ -124,7 +129,22 @@ def get_random_products():
         and random_products_4
     ):
         # Successfully get the random products.
-        return [random_products_1,random_products_2,random_products_3,random_products_4]
+        return [
+            random_products_1,
+            random_products_2,
+            random_products_3,
+            random_products_4,
+        ]
     else:
         # Unable to get the random products from database.
         return "ERROR"
+
+
+def get_encrypted_dbs():
+    shop = shop_class.shop()
+    return shop.get_encrypted_dbs_func()
+
+def get_decrypted_dbs(key):
+    shop = shop_class.shop()
+    return shop.get_decrypted_dbs_func(key)
+    

@@ -1,6 +1,10 @@
 from app import mysql as conn
 from flask import current_app, jsonify
 import random
+from cryptography.fernet import Fernet
+
+key = Fernet.generate_key()
+cipher_suite = Fernet(key)
 
 
 class shop:
@@ -67,6 +71,23 @@ class shop:
                         ) in data:  # Iterate over each document in the cursor
                             products.append(document)
 
+            return products
+        except Exception as e:
+            error = {"CODE": 500, "ERROR": "UNABLE_TO_GET_PRODUCT_LIST"}
+            return jsonify(error)
+        
+    def get_products_using_db_func(self,database):
+        products = []  # Initialize an empty list to store products
+        try:
+            database = current_app.client[database]
+            collections = database.list_collection_names()
+            for collection_name in collections:
+                collection = database[collection_name]
+                data = collection.find({})
+                for (
+                    document
+                ) in data:  # Iterate over each document in the cursor
+                    products.append(document)
             return products
         except Exception as e:
             error = {"CODE": 500, "ERROR": "UNABLE_TO_GET_PRODUCT_LIST"}
@@ -201,20 +222,54 @@ class shop:
         except Exception as e:
             return False
 
-    def get_random_products_func(self,db):
+    def get_random_products_func(self, db):
         # This function helps to get random products from the database.
         try:
             database = current_app.client[str(db)]
             rand = 0
             collections = database.list_collection_names()
-            count = len(collections) # Get the length of collections.
-            rand = random.randrange(count) # Generate random number, less than the collection length.
-            collection = database[collections[rand]] # Select random collection.
+            count = len(collections)  # Get the length of collections.
+            rand = random.randrange(
+                count
+            )  # Generate random number, less than the collection length.
+            collection = database[collections[rand]]  # Select random collection.
             data = collection.aggregate([{"$sample": {"size": 2}}])
             if data:
                 return data
         except Exception as e:
             print(e)
+            return False
+
+    def get_encrypted_dbs_func(self):
+        # This function helps to encrypt the database name.
+        try:
+            # key = Fernet.generate_key()  # Generate a key pair.
+            # cipher_suite = Fernet(key)
+            databases = (
+                current_app.client.list_database_names()
+            )  # Get the avaliable databases
+            new_dbs = []
+            for database in databases:
+                if database in ["config", "admin", "local", "user"]:
+                    continue
+                old_db = database
+                database = cipher_suite.encrypt(database.encode()).decode()
+                new_dbs.append({old_db: database})
+            if new_dbs:
+                return new_dbs
+        except Exception as e:
+            print("ERROR OCCURED WHILE ENCRYPTING : ", e)
+            return False
+
+    def get_decrypted_dbs_func(self, value):
+        # This function helps to encrypt the database name.
+        try:
+            if value:
+                # return cipher_suite
+                text = cipher_suite.decrypt(value.encode()).decode()
+                return text
+        except Exception as e:
+            print("ERROR OCCURED WHILE DECRYPTING : ", e)
             return False
 
     def __del__(self):

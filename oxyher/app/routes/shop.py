@@ -16,7 +16,9 @@ from ..models.shop import (
     get_user_addr,
     get_my_final_items,
     get_item_suggestion,
-    make_new_order
+    make_new_order,
+    get_encrypted_dbs,
+    get_decrypted_dbs
 )
 from modules.is_valid import is_login
 import datetime, jwt
@@ -38,23 +40,41 @@ shop = Blueprint("shop", __name__)
 @shop.route("")
 def home():
     search_query = request.args.get('q', '')  # Product search query
-    cat = request.args.get('c_', '')
-    page = int(request.args.get('page', 1))  # Current page
-    products = get_products("ALL")
-    # per_page = int(request.args.get('per_page', PER_PAGE))  # Items per page
+    category = request.args.get('c_', False)
+    # enc_database = get_encrypted_dbs()
+    if category:
+        decrypted_category = get_decrypted_dbs(category)
+        print(decrypted_category)
+        products = get_products("CATEGORY",category=decrypted_category)
 
+    else:
+        products = get_products("ALL")
+        
+    try :
+        for temp in products:
+            if temp['product_id']:
+                return render_template("themes/customer/shop/shop.html", products=products, error=0)
+            else:
+                return render_template("themes/customer/shop/shop.html", error=1,products=0)
+    except Exception as e:
+        return render_template("themes/customer/shop/shop.html", error=1,products=0)
+                
+    
+        
+
+
+    """ TODO: Pagination """
+    # page = int(request.args.get('page', 1))  # Current page
+    # per_page = int(request.args.get('per_page', PER_PAGE))  # Items per page
     # # Filter based on the search query (modify as needed)
     # filter_criteria = {"title": {"$regex": search_query, "$options": "i"}}
-
     # # Calculate the total count and pages
     # total_count = products_collection.count_documents(filter_criteria)
     # total_pages = (total_count + per_page - 1) // per_page
-
     # # Find products with skip and limit for pagination
     # products = list(products_collection.find(filter_criteria)
     #                 .skip((page - 1) * per_page)
     #                 .limit(per_page))
-
     # return render_template('search.html',
     #                        products=products,
     #                        page=page,
@@ -62,8 +82,7 @@ def home():
     #                        total_pages=total_pages,
     #                        search_query=search_query)
     # page = int(request.args.get('page', 1)) 
-    return render_template("themes/customer/shop/shop.html", products=products)
-
+    
 
 @shop.route("/cart", methods=["GET"])
 @is_login.login_required

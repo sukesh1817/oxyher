@@ -290,7 +290,10 @@
     <div class="row px-xl-5">
         <div class="col-lg-5 pb-5">
             <div class="back-button mb-4">
-                <a class="text-decoration-none" href="{{ url_for('shop.home') }}">
+                <!-- <a class="text-decoration-none" href="{{ url_for('shop.home') }}">
+                    <i class="fas fa-arrow-left"></i> Go back
+                </a> -->
+                <a class="text-decoration-none" href="{{ url_for('shop.home')  }}#{{product['product_id']}}">
                     <i class="fas fa-arrow-left"></i> Go back
                 </a>
             </div>
@@ -315,7 +318,7 @@
 
         <div class="col-lg-7 pb-5">
             <h3 class="font-weight-semi-bold">{{ product['title'] }}</h3>
-            <div class="d-flex mb-3">
+            <!-- <div class="d-flex mb-3">
                 <div class="text-primary mr-2">
                     <small class="fas fa-star"></small>
                     <small class="fas fa-star"></small>
@@ -323,9 +326,15 @@
                     <small class="fas fa-star-half-alt"></small>
                     <small class="far fa-star"></small>
                 </div>
-                <!-- <small class="pt-1">(50 Reviews)</small> -->
-            </div>
-            <h3 class="font-weight-semi-bold mb-4">{{ product['price'] | int }} Rs</h3>
+                <small class="pt-1">(50 Reviews)</small>
+            </div> -->
+            <h3 class="font-weight-semi-bold mb-4">
+                {% if product['quantity'] != 0%}
+                {{ product['price'] | int }} Rs
+                {% else %}
+                <p style="font-size: 20px;" class="fw-bold text-danger">Out of stock</p>
+                {% endif %}
+            </h3>
             <p class="mb-4">
                 {{ product['description'] }}
             </p>
@@ -394,10 +403,16 @@
                     </div>
                 </div> -->
                 <!-- <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button> -->
-                <a style="margin-right: 10px;" href="{{ url_for('shop.add_to_cart', p_id=product['product_id']) }}"
-                    class="btn btn-primary px-3 me-2"><i class="fa fa-shopping-cart mr-1"></i> Buy now</a>
-                <a href="{{ url_for('shop.add_to_cart', p_id=product['product_id']) }}" class="btn btn-primary px-3"><i
-                        class="fa fa-shopping-cart mr-1"></i> Add cart</a>
+
+                {% if product['quantity'] == 0 %}
+                    <p class="fw-bold">Product not avaliable in the moment, please try again.</p>
+                {% else %}
+                    <a style="margin-right: 10px;" href="{{ url_for('shop.add_to_cart', p_id=product['product_id']) }}"
+                        class="btn btn-primary px-3 me-2"><i class="fa fa-shopping-cart mr-1"></i> Buy now</a>
+                    <a href="{{ url_for('shop.add_to_cart', p_id=product['product_id']) }}" class="btn btn-primary px-3"><i
+                            class="fa fa-shopping-cart mr-1"></i> Add cart</a>
+                {% endif %}
+
             </div>
             <!-- <div class="d-flex pt-2">
                 <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
@@ -421,9 +436,9 @@
     <div class="row px-xl-5">
         <div class="col">
             <div class="nav nav-tabs justify-content-center border-secondary mb-4">
-                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+                <a class="text-primary nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                <a class="text-primary nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
+                <a class="text-primary nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-pane-1">
@@ -496,7 +511,14 @@
                             </form>
                         </div>
                     </div> -->
-                    <h1 class="text-center">Nothing is found</h1>
+                    <div class="text-center py-5">
+                        <i class="bi bi-chat-dots fs-1 text-muted"></i> <!-- Bootstrap icon for reviews -->
+                        <h3 class="fw-bold text-secondary mt-3">No Reviews Yet</h3>
+                        <p class="text-muted">It looks like no one has shared their thoughts yet. Be the first to leave a review!</p>
+                        <a href="#sim_p" style="border-radius:4px" class="btn btn-primary mt-3">Explore produtcs</a>
+                    </div>
+                    
+                    
                 </div>
             </div>
         </div>
@@ -508,7 +530,7 @@
     <div class="text-center mb-4">
         <h2 class="section-title px-5"><span class="px-2">You May Also Like</span></h2>
     </div>
-    <div class="row px-xl-5">
+    <div id="sim_p" class="row px-xl-5">
         <div class="col">
             <div class="owl-carousel related-carousel">
 

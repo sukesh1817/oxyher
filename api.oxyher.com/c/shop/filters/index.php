@@ -50,7 +50,7 @@ if (isset($_GET['category'])) {
             </div>
             <h2 class="text-danger mt-3">No Products Available</h2>
             <p class="text-dark">We couldn’t find any products within this price range.</p>
-            <a href="/shop" class="btn btn-primary mt-3">Return to Shop</a>
+            <a style="border-radius: 4px;" href="<?php $url[''] ?>" class="btn btn-primary mt-3">Return to Shop</a>
         </div>
     <?php } else {
         foreach ($all_documents as $collection_name => $documents) {

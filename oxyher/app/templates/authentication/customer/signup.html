@@ -184,7 +184,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <p class="text-center fw-normal">or</p>
-                                        <a href="{{url_for('auth.google_o_auth')}}" class="btn btn-darkblue container-fluid rounded-sharp">
+                                        <a style="border-radius: 4px;" href="{{url_for('auth.google_o_auth')}}" class="btn btn-darkblue container-fluid rounded-sharp">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                                 fill="currentColor" class="bi bi-google text-white" viewBox="0 0 16 16"
                                                 disabled="">
@@ -199,13 +199,13 @@
                                     </div>
 
                                     <div class="form-group mb-3">
-                                        <p>Already have an account ? <a href="{{ url_for('auth.signin') }}"
+                                        <p>Already have an account ? <a style="border-radius: 4px;" href="{{ url_for('auth.signin') }}"
                                                 class="forgot-link float-right text-primary">click here</a> </p>
                                     </div>
-                                    <div class="form-group mb-3">
+                                    <!-- <div class="form-group mb-3">
                                         <p>Want seller account ? <a href="{{ url_for('auth.seller_signup') }}"
                                                 class="forgot-link float-right text-primary">click here</a> </p>
-                                    </div>
+                                    </div> -->
 
 
 
@@ -213,14 +213,13 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 d-none d-lg-inline-block mt-3">
+                        <div class="col-lg-6 d-none d-lg-inline-block mt-3 mb-3">
                             <div class="account-block">
-                                <div class="overlay"></div>
-                                <div class="account-testimonial">
-                                    <h4 class="text-white mb-4">This beautiful life yours!</h4>
-                                    <p class="lead text-white">"Best investment i made for a long time. Can only
-                                        recommend it for other users."</p>
-                                    <p>- Women</p>
+                                <div style="border-radius: 10px;" class="overlay"></div>
+                                <div id="quote-section" class="account-testimonial">
+                                    <p class="lead text-white" id="quote-text">
+                                       </p>
+                                    <p id="quote-author"></p>
                                 </div>
                             </div>
                         </div>
@@ -281,5 +280,46 @@
     });
 
 
+</script>
+
+<script>
+    function decodeHtmlEntities(encodedString) {
+        const textarea = document.createElement('textarea'); // Create a textarea element
+        textarea.innerHTML = encodedString; // Set its HTML content to the encoded string
+        return textarea.value; // Get the decoded value
+    }
+
+    const quotes = [
+        {% for quote in quotes %}
+        {
+            text: "{{ quote.quote|escape }}",
+            author: "{{ quote.author|escape }}"
+        } {% if not loop.last %}, {% endif %}
+        {% endfor %}
+    ];
+
+    function displayRandomQuote() {
+        const quoteSection = document.getElementById('quote-section');
+
+        // Add slide-out animation class
+        //quoteSection.classList.add('slide-out');
+
+        setTimeout(() => {
+            // Generate a new random quote
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote-text').innerText = decodeHtmlEntities(randomQuote.text) ;
+            document.getElementById('quote-author').innerText = decodeHtmlEntities(randomQuote.author) ;
+
+            // Remove slide-out class and add slide-in class
+            //quoteSection.classList.remove('slide-out');
+            //quoteSection.classList.add('slide-in');
+        }, 1000); // Wait for slide-out animation to complete (0.5s)
+    }
+
+    // Initial display
+    displayRandomQuote();
+
+    // Update quote every 5 seconds
+    setInterval(displayRandomQuote, 5000);
 </script>
 {% endblock %}

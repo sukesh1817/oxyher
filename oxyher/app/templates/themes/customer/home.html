@@ -221,7 +221,16 @@
         padding: 2rem;
         text-align: center;
     }
+
+    .modal-backdrop {
+        backdrop-filter: blur(5px);
+        /* Adjust blur intensity */
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Add slight opacity for darker background */
+    }
 </style>
+
+
 
 {% endblock %}
 
@@ -259,59 +268,69 @@
 
 <div class="container-fluid pt-5">
     <div class="row px-xl-5 pb-3">
-        <div class="col-lg-6 col-md-12 col-sm-6 pb-1 custom-br">
-            <div class="cat-item d-flex flex-column border mb-4 custom-br" style="padding: 30px;">
-                <p class="text-right">15 Products</p>
-                <a href="{{url_for('shop.home', c_='menstrual_care_products')}}"
+        <!-- Menstrual Care -->
+        <div class="col-lg-6 col-md-6 col-sm-12 pb-4">
+            <div
+                class="cat-item d-flex flex-column align-items-center text-center border rounded-lg p-4 shadow-sm hover-effect">
+                <!-- <p class="text-muted mb-2">15 Products</p> -->
+                <a href="{{ url_for('shop.home', c_=enc_dbs[1]['intimate_care']) }}"
                     class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid"
-                        src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp")}}'
-                        alt="bio degradable snitary pads">
+                    <img class="img-fluid rounded"
+                        src="{{ url_for('static', filename='img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp') }}"
+                        alt="bio degradable sanitary pads" style="height: 200px; object-fit: cover;">
                 </a>
-                <h5 class="font-weight-semi-bold m-0">Menstrual care</h5>
+                <h5 class="font-weight-bold m-0">Menstrual Care</h5>
             </div>
         </div>
 
-        <div class="col-lg-6 col-md-12 col-sm-6 pb-1 custom-br">
-            <div class="cat-item d-flex flex-column border mb-4 custom-br" style="padding: 30px;">
-                <p class="text-right">15 Products</p>
-                <a href="{{url_for('shop.home', c_='intimate_care_products')}}"
+        <!-- Intimate Care -->
+        <div class="col-lg-6 col-md-6 col-sm-12 pb-4">
+            <div
+                class="cat-item d-flex flex-column align-items-center text-center border rounded-lg p-4 shadow-sm hover-effect">
+                <!-- <p class="text-muted mb-2">15 Products</p> -->
+                <a href="{{ url_for('shop.home', c_=enc_dbs[0]['inner_wears']) }}"
                     class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid"
-                        src='{{ url_for("static", filename="img/oxyher/pee_safe_sanitary_pads/reusable_pads/6/reusable_sanitary_pads_pack_side.webp")}}'
-                        alt="reusable sanitary pads">
+                    <img class="img-fluid rounded"
+                        src="{{ url_for('static', filename='img/oxyher/pee_safe_sanitary_pads/reusable_pads/6/reusable_sanitary_pads_pack_side.webp') }}"
+                        alt="reusable sanitary pads" style="height: 200px; object-fit: cover;">
                 </a>
-                <h5 class="font-weight-semi-bold m-0">Intimate care</h5>
+                <h5 class="font-weight-bold m-0">Intimate Care</h5>
             </div>
         </div>
     </div>
-    <div class="row px-xl-5 pb-3 custom-br justify-content-between">
-        <div class="col-lg-6 col-md-12 pb-1 custom-br">
-            <div class="cat-item d-flex flex-column border mb-4 custom-br" style="padding: 30px;">
-                <p class="text-right">15 Products</p>
-                <a href="{{url_for('shop.home', c_='personal_care_products')}}"
+
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-6 col-md-6 col-sm-12 pb-4">
+            <div
+                class="cat-item d-flex flex-column align-items-center text-center border rounded-lg p-4 shadow-sm hover-effect">
+                <!-- <p class="text-muted mb-2">15 Products</p> -->
+                <a href="{{ url_for('shop.home', c_=enc_dbs[3]['medicines']) }}"
                     class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid" src='{{ url_for("static", filename="img/oxyher/femi_pads/femi_pad_2.webp")}}'
-                        alt="femi sanitary pads">
+                    <img class="img-fluid rounded"
+                        src="{{ url_for('static', filename='img/oxyher/femi_pads/femi_pad_2.webp') }}"
+                        alt="femi sanitary pads" style="height: 200px; object-fit: cover;">
                 </a>
-                <h5 class="font-weight-semi-bold m-0">Personal care</h5>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-12 pb-1 custom-br">
-            <div class="cat-item d-flex flex-column border mb-4 custom-br" style="padding: 30px;">
-                <p class="text-right">15 Products</p>
-                <a href='{{url_for("shop.home", c_="kids_care_products")}}'
-                    class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid"
-                        src='{{ url_for("static", filename="img/oxyher/cup_wash/menstrual_cup_wash_side.webp")}}'
-                        alt="menstrual cup wash">
-                </a>
-                <h5 class="font-weight-semi-bold m-0">Kids care</h5>
+                <h5 class="font-weight-bold m-0">Personal Care</h5>
             </div>
         </div>
 
+        <!-- Kids Care -->
+        <div class="col-lg-6 col-md-6 col-sm-12 pb-4">
+            <div
+                class="cat-item d-flex flex-column align-items-center text-center border rounded-lg p-4 shadow-sm hover-effect">
+                <!-- <p class="text-muted mb-2">15 Products</p> -->
+                <a href="{{ url_for('shop.home', c_=enc_dbs[2]['kids_section']) }}"
+                    class="cat-img position-relative overflow-hidden mb-3">
+                    <img class="img-fluid rounded"
+                        src="{{ url_for('static', filename='img/oxyher/cup_wash/menstrual_cup_wash_side.webp') }}"
+                        alt="menstrual cup wash" style="height: 200px; object-fit: cover;">
+                </a>
+                <h5 class="font-weight-bold m-0">Kids Care</h5>
+            </div>
+        </div>
     </div>
 </div>
+
 
 
 <!-- <div class="container-fluid offer pt-5">
@@ -375,9 +394,9 @@
 
                 </div>
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                    <h6 class="text-truncate mb-3">{{ product['display_name']}}</h6>
+                    <h6 style="font-size: 15px;" class="text-truncate mb-3">{{ product['display_name']}}</h6>
                     <div class="d-flex justify-content-center">
-                        <h6>{{ product['price'] | int }} Rs</h6>
+                        <h6 style="font-weight: 10px;font-size:15px">{{ product['price'] | int }} Rs</h6>
                         <!-- <h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
                     </div>
                 </div>
@@ -626,9 +645,9 @@
 
                 </div>
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                    <h6 class="text-truncate mb-3">{{ product['display_name']}}</h6>
+                    <h6 style="font-size: 15px;" class="text-truncate mb-3">{{ product['display_name']}}</h6>
                     <div class="d-flex justify-content-center">
-                        <h6>{{ product['price'] | int }} Rs</h6>
+                        <h6 style="font-weight: 10px;font-size:15px">{{ product['price'] | int }} Rs</h6>
                         <!-- <h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
                     </div>
                 </div>
@@ -909,30 +928,33 @@
 {% if login %}
 
 <div class="container">
-    <div style="overflow: hidden; padding-right: 0px;" class="modal-open modal fade" id="loginModal" tabindex="-1"
-        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content" style="border-radius: 4px;">
+            <div class="modal-content" style="border-radius: 8px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
                 <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="exampleModalLabel">Sign In or Sign Up</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <i class="bi bi-person-circle me-2 fs-3"></i>
+                        Welcome user!
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p class="text-center">Dear customer, you need to sign in to use certain features. Please sign in to
-                        explore products and functionalities.</p>
-                    <div class="d-flex flex-column text-center">
-                        <a href="{{url_for('auth.signin')}}" class="btn btn-primary btn-block  text-white"
-                            style="border-radius: 4px;">Sign In</a>
-                        <a href="{{url_for('auth.signup')}}" class="btn btn-primary btn-block  text-white mt-2"
-                            style="border-radius: 4px;">Sign Up</a>
+                <div class="modal-body text-center">
+                    <p class="text-muted">
+                        Dear customer, please sign in to unlock access to exclusive features and explore products.
+                    </p>
+                    <div class="d-flex flex-column align-items-center">
+                        <a href="{{url_for('auth.signin')}}" class="btn btn-primary btn-block text-white w-75 mb-2"
+                            style="border-radius: 30px;">Sign In</a>
+                        <a href="{{url_for('auth.signup')}}" class="btn btn-outline-dark btn-block w-75"
+                            style="border-radius: 30px;">Sign Up</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 {% endif %}
 

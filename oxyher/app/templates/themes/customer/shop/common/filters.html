@@ -153,19 +153,30 @@
     <div class="d-flex justify-content-between align-items-center">
         <h2>Products</h2>
         <!-- Button to open the filter off-canvas -->
-        <button style="border-radius: 4px;" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#filterCanvas"
-            aria-controls="filterCanvas">
+        <button style="border-radius: 4px;" class="btn btn-primary" data-bs-toggle="offcanvas"
+            data-bs-target="#filterCanvas" aria-controls="filterCanvas">
             Show Filters
         </button>
     </div>
 
     <!-- Main product content goes here -->
+    {% if error==1 and products==0 %}
+    <div id="productList" class="row mt-3">
+        <div id class="container d-flex flex-column justify-content-center align-items-center vh-100 text-center">
+            <div class="text-muted display-1">
+                <i class="fas fa-box-open"></i>
+            </div>
+            <h2 class="text-danger mt-3">No Products Available</h2>
+            <p class="text-dark">We couldn’t find any products .</p>
+            <a style="border-radius: 4px;" href="{{ url_for('shop.home')}}" class="btn btn-primary mt-3">Go to shop</a>
+        </div>
+    </div>
+    {% endif %}
+    {% if error==0 and products!=0 %}
     <div id="productList" class="row mt-3">
         {% for product in products %}
-
-
-        <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-            <div class="card product-item border-0 mb-4">
+        <div id="{{product['product_id']}}" class="col-lg-4 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 m-2">
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 
                     <a href="{{ url_for('shop.show_individual_product', p_id=product['product_id']) }}">
@@ -184,7 +195,8 @@
                         <!-- <h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
                     </div>
                 </div>
-                <div class="card-footer {% if product['quantity'] != 0%}  d-flex justify-content-between {% endif %}   bg-light border">
+                <div
+                    class="card-footer {% if product['quantity'] != 0%}  d-flex justify-content-between {% endif %}   bg-light border">
                     <!-- <a href="{{ url_for('shop.show_individual_product', p_id=product['product_id']) }}"
                         class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View
                         Detail</a> -->
@@ -192,8 +204,8 @@
                     <p class="text-center" style="margin:0px">
                         <small>Product currently unavaliable</small>
                     </p>
-                        <!-- <small class="text-center"></small> -->
-                    
+                    <!-- <small class="text-center"></small> -->
+
                     {% else %}
                     <a href="{{ url_for('shop.add_to_cart', p_id=product['product_id']) }}"
                         class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-bag text-primary mr-1"></i>Add to
@@ -212,6 +224,7 @@
         </div>
 
         {% endfor %}
+        {% endif %}
     </div>
 </div>
 
@@ -269,4 +282,3 @@
         <!-- Repeat similar structure for each filter type -->
     </div>
 </div>
-
