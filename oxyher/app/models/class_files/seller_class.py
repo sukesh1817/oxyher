@@ -138,6 +138,66 @@ class seller:
                             # status = {"CODE" : 200, "STATUS" : "PRODUCT_EDITED_SUCCESS"}
                             # return jsonify(status)
                             return True
+
         except Exception as e:
             error = {"CODE": 500, "ERROR": "UNABLE_TO_DELETE_PRODUCT_LIST"}
             return jsonify(error)
+
+    def get_pending_orders_func(self, seller_id):
+        database = current_app.client["user"]
+        collection = database["orders"]
+        data = list(collection.find({"orders": {"$elemMatch": {"status": 1}}}))
+        if data:
+            return data
+        else:
+            return list("NO_DATA_FOUND")
+
+    def get_single_pending_orders_func(self, o_id, seller_id):
+        database = current_app.client["user"]
+        collection = database["orders"]
+        data = list(collection.find({"orders": {"$elemMatch": {"order_id": o_id, "status": 1}}}))
+        
+        if data:
+            return data
+        else:
+            return list("NO_DATA_FOUND")
+        
+    def get_completed_orders_func(self, seller_id):
+        database = current_app.client["user"]
+        collection = database["orders"]
+        data = list(collection.find({"orders": {"$elemMatch": {"status": 2}}}))
+        if data:
+            return data
+        else:
+            return list("NO_DATA_FOUND")
+
+    def get_single_completed_orders_func(self, o_id, seller_id):
+        database = current_app.client["user"]
+        collection = database["orders"]
+        data = list(collection.find({"orders": {"$elemMatch": {"order_id": o_id,"status": 2 }}}))
+        
+        if data:
+            return data
+        else:
+            return False
+        
+    def get_canceled_orders_func(self, seller_id):
+        database = current_app.client["user"]
+        collection = database["orders"]
+        data = list(collection.find({"orders": {"$elemMatch": {"status": 0}}}))
+        if data:
+            return data
+        else:
+            return False
+
+    def get_single_canceled_orders_func(self, o_id, seller_id):
+        database = current_app.client["user"]
+        collection = database["orders"]
+        data = list(collection.find({"orders": {"$elemMatch": {"order_id": o_id, "status": 0}}}))
+        
+        if data:
+            return data
+        else:
+            return False
+        
+    

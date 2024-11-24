@@ -30,7 +30,6 @@
 
 {% include 'themes/customer/common/navbar.html' %}
 
-<hr>
 
 
 
@@ -55,6 +54,8 @@
                 {{ "Fill your address before shipping." }}
                 {% else %}
                 {{ user_addr }}
+                <br>
+                {{ user_data[5]}}
                 {% endif %}
               </p>
               <div class="mt-auto">
@@ -66,17 +67,26 @@
         </div>
 
         <div class="col-lg-6 col-md-6 col-sm-12 mt-1">
-          <div class="card h-100 {% if not user_data[3] %}border border-danger{% endif %}">
+          <div
+            class="card h-100 {% if not user_data[3] or  user_data[2] == 'NOT_GIVEN'  %}border border-danger{% endif %}">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">Customer information</h5>
               <p class="card-text">
-                {{ user_data[1] }} <br>
-                {{ user_data[0] }} <br>
+                {{ user_data[1] }} {# name #}
+                <br>
                 {% if user_data[3] %}
-                {{ user_data[3] }}
+                {{ user_data[3] }} {# phone no #}
                 {% else %}
                 <small class="text-danger">Fill your phonenumber.</small>
                 {% endif %}
+                <br>
+                {% if not user_data[2] == "NOT_GIVEN" %}
+                {{ user_data[2] }}
+                {% else %}
+                <small class="text-danger">Fill your email.</small>
+                {% endif %}
+
+
               </p>
               <div class="mt-auto">
                 <a href="{{ url_for('profile.edit_profile') }}" class="btn btn-primary text-white custom-br">Change
@@ -91,55 +101,62 @@
     </div>
 
     <div class="col-lg-4">
-      <div class="card border-secondary mb-1">
-        <div class="card-header bg-secondary border-0">
-          <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+      <div class="card border-light shadow-sm mb-4" style="border-radius: 10px;">
+        <div class="card-header text-primary text-white border-0" style="border-radius: 10px 10px 0 0;">
+          <h4 class="font-weight-bold m-0">Order Summary</h4>
         </div>
-        <div class="card-body">
-          {% set ns = namespace(items=0) %}
-          {% for product in products %}
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <!-- Product Name and Quantity -->
-            <p class="m-0" style="font-size: 0.9rem; color: #333; font-weight: 500;">
-              {{ product['display_name'] }}
-              <span style="color: #555; font-weight: 400;">x</span>
-              <b style="color: #333;">{{ product['qty'] }}</b>
-            </p>
 
-            <!-- Product Price -->
-            <p class="m-0" style="font-size: 0.9rem; color:rgb(255, 111, 145); font-weight: 600;">
-              {{ product['final_price'] | int }} Rs
-            </p>
-
-            {% set ns.items = ns.items + product['final_price'] %}
-          </div>
-          {% endfor %}
-
-
-          <hr class="">
-          <div class="d-flex justify-content-between mb-3 pt-1">
-            <h6 class="font-weight-medium">Subtotal</h6>
-            <h6 class="font-weight-medium">{{ ns.items | int }} Rs</h6>
-          </div>
-          <!-- <div class="d-flex justify-content-between">
-            <h6 class="font-weight-medium">Shipping</h6>
-            <h6 class="font-weight-medium">$10</h6>
-          </div> -->
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Product</th>
+                        <th style="text-align: center;">Quantity</th>
+                        <th style="text-align: right;">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set ns = namespace(items=0) %}
+                    {% for product in products %}
+                    <tr>
+                        <td style="font-size: 0.9rem; font-weight: 500; color: #444; word-wrap: break-word;">
+                            {{ product['display_name'] }}
+                        </td>
+        
+                        <td style="font-size: 0.9rem; font-weight: 500; color: #222; text-align: center; white-space: nowrap;">
+                            {{ product['qty'] }}
+                        </td>
+        
+                        <td style="font-size: 0.9rem; font-weight: 600; color: #000000; text-align: right; white-space: nowrap;">
+                            {{ product['final_price'] | int }} Rs
+                        </td>
+                    </tr>
+                    {% set ns.items = ns.items + product['final_price'] %}
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" style="font-size: 0.9rem; font-weight: 600; text-align: right;">Subtotal:</td>
+                        <td style="font-size: 0.9rem; font-weight: 600; color: #444; text-align: right;">
+                            {{ ns.items | int }} Rs
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-        <!-- <div class="card-footer border-secondary bg-transparent">
-          <div class="d-flex justify-content-between mt-2">
-            <h5 class="font-weight-bold">Total</h5>
-            <h5 class="font-weight-bold">$160</h5>
-          </div>
-        </div> -->
-        <a href="{{ url_for('shop.redirect_to_payment') }}" class="container-fluid btn btn-lg btn-primary font-weight-bold text-white rounded-bottom 
-   {% if pincode_error %}disabled-link{% endif %}">
-          Go to payment
+        
+        </div>
+
+
+        <!-- Payment Button -->
+        <a href="{{ url_for('shop.redirect_to_payment') }}" class="btn btn-primary btn-lg font-weight-bold text-white rounded-bottom w-100 py-3 
+             {% if pincode_error %}disabled-link{% endif %}" style="border-radius: 0 0 10px 10px;">
+          Proceed to Payment
         </a>
-
-
       </div>
     </div>
+
   </div>
 
 </div>
@@ -149,7 +166,6 @@
 
 
 
-<!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 

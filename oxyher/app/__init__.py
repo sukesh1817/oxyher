@@ -58,7 +58,7 @@ def create_app():
     app.config["MYSQL_USER"] = mysql_data["USERNAME"]
     app.config["MYSQL_HOST"] = mysql_data["MYSQL_HOST"]
     app.config["MYSQL_PASSWORD"] = mysql_data["PASSWORD"]
-    app.config["MYSQL_DB"] = mysql_data["DATABASE"]
+    app.config["MYSQL_DB"] = mysql_data["DATABASE_1"]
     mysql.init_app(app)
 
     # Google OAuth initialization

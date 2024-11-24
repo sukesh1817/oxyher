@@ -420,6 +420,110 @@
     }
 </style>
 
+<style>
+    /* Position the toast in the lower middle of the screen */
+    .toast-container {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1055;
+    }
+
+    /* Customized Toast Styles */
+    .toast {
+        background-color: #fff;
+        /* White background for cleanliness */
+        border-radius: 8px;
+        /* Rounded corners */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        /* Subtle drop shadow */
+        max-width: 300px;
+        /* Maximum width for better presentation */
+        font-family: Arial, sans-serif;
+        /* Clean font */
+    }
+
+
+
+    .toast-body {
+        font-size: 14px;
+        /* Neat font size */
+        color: #fefefe;
+        /* Dark text for body */
+        padding: 10px 15px;
+        background-color: #363232
+            /* Padding for body */
+    }
+
+    /* Close button custom style */
+    .btn-close {
+        filter: brightness(0) invert(1);
+        /* White close button */
+    }
+
+    /* Customize the timestamp text */
+    .text-muted {
+        font-size: 12px;
+        /* Smaller font for timestamp */
+        color: #ccc;
+        /* Light gray for timestamp */
+    }
+
+    /* Slide out and slide in animation */
+    @keyframes slideOut {
+        0% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+    }
+
+    @keyframes slideIn {
+        0% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .slide-out {
+        animation: slideOut 0.5s forwards;
+    }
+
+    .slide-in {
+        animation: slideIn 0.5s forwards;
+    }
+
+    #quote-section {
+        /* Set a fixed height to avoid layout shifting */
+        height: 100px;
+        /* Adjust as needed */
+        overflow: hidden;
+        /* Prevent overflow during animation */
+        transition: opacity 0.5s ease;
+        /* Smooth transition for fade */
+    }
+
+    .slide-out {
+        opacity: 0;
+        /* Fade out */
+    }
+
+    .slide-in {
+        opacity: 1;
+        /* Fade in */
+    }
+</style>
+
 
 {% endblock %}
 
@@ -430,6 +534,21 @@
 {% include 'themes/customer/common/navbar.html' %}
 
 
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <div class="toast-container">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+            <div class="toast-body">
+                {{ message }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 
 <div class="card">
     <div class="row">
@@ -584,6 +703,8 @@
 </dialog>
 
 
+
+
 <a href="#" class="btn btn-primary back-to-top text-white"><i class="fa fa-angle-double-up"></i></a>
 
 {% include 'themes/customer/common/footbar.html' %}
@@ -603,6 +724,23 @@
 <script src='{{ url_for("static", filename="js/main.js")}}'></script>
 <script src='{{ url_for("static", filename="js/shop/cart.js")}}'></script>
 
+<script>
+    const toastTrigger = document.getElementById('liveToastBtn')
+    const toastLiveExample = document.getElementById('liveToast')
+
+    const toast = new bootstrap.Toast(toastLiveExample)
+    toast.show()
+</script>
+
+<script>
+    window.onload = function () {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl, { autohide: true, delay: 3000 });
+        });
+        toastList.forEach(toast => toast.show());
+    };
+</script>
 
 
 {% endblock %}

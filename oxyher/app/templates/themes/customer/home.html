@@ -162,73 +162,7 @@
         /* Cover the area without distortion */
     }
 </style>
-<style>
-    /* Carousel inner styling */
-    .carousel-inner {
-        height: 100%;
-        background: linear-gradient(135deg, #4a90e2, #9013fe);
-        position: relative;
-        border-radius: 12px;
-        overflow: hidden;
-    }
 
-    /* Dark overlay for text readability */
-    .carousel-inner::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: 1;
-    }
-
-    /* Text styling */
-    #animatedText1 {
-        color: #ffffff;
-        font-size: 5rem;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        position: relative;
-        z-index: 2;
-        opacity: 2;
-        /* Hidden initially */
-        transition: opacity 0.8s ease, transform 0.5s ease;
-        /* Smooth transition */
-    }
-
-    /* Animation for each letter fade-in */
-    .text-appear {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .text-large {
-        font-size: 6rem;
-        /* Bigger font when the word is fully displayed */
-        transition: font-size 0.3s ease;
-    }
-
-    .text-small {
-        font-size: 4rem;
-        /* Shrinks smoothly */
-    }
-
-    /* Text container padding and alignment */
-    .carousel-caption {
-        bottom: 30%;
-        padding: 2rem;
-        text-align: center;
-    }
-
-    .modal-backdrop {
-        backdrop-filter: blur(5px);
-        /* Adjust blur intensity */
-        background-color: rgba(0, 0, 0, 0.5);
-        /* Add slight opacity for darker background */
-    }
-</style>
 
 
 
@@ -240,24 +174,49 @@
 {% include 'themes/customer/common/navbar.html' %}
 
 
-
 <div class="container-fluid mb-5 mt-4">
-    <div class="row px-xl-5 ">
+    <div class="row px-xl-5">
         <div class="col-lg-12">
-            <div id="headerCarousel" class="carousel slide carousel-fade rounded" data-bs-ride="carousel"
-                data-bs-interval="3000">
-                <div id="oxyherCarousel" class="carousel slide rounded" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active rounded">
-                            <div
-                                class="carousel-caption d-flex flex-column align-items-center justify-content-center rounded">
-                                <div class="p-3 caption-content rounded">
-                                    <h1 id="animatedText1" class="display-1 text-white fw-bold mb-4 carousel-font ">
-                                    </h1>
-                                </div>
+            <div id="headerCarousel" class="carousel slide carousel-fade rounded shadow" data-bs-ride="carousel"
+                data-bs-interval="4000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active rounded">
+                        <img src='{{ url_for("static", filename="img/layout/cover-1.jpg")}}'
+                            class="d-block w-100 rounded" alt="Empowering Choices">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center text-center mb-5">
+                            <div class="p-3 caption-content rounded bg-dark bg-opacity-100 w-100">
+                                <h1 id="animatedText1" class="display-3 text-white fw-bold mb-4">Make your choice</h1>
+                                <p class="text-white lead">Make your choice better, <br> choose oxyher.</p>
+                                <a style="border-radius: 4px;" href="{{ url_for('shop.home', c_=enc_dbs[1]['intimate_care']) }}" class="btn btn-light btn-lg mt-3">Shop Now</a>
                             </div>
                         </div>
                     </div>
+
+                    <!-- <div class="carousel-item rounded">
+                        <img src='{{ url_for("static", filename="img/layout/cover-1.jpg")}}'
+                            class="d-block w-100 rounded" alt="Sustainability Matters">
+                        <div
+                            class="carousel-caption d-flex flex-column align-items-center justify-content-center text-center">
+                            <div class="p-3 caption-content rounded bg-dark bg-opacity-50">
+                                <h1 id="animatedText1" class="display-3 text-white fw-bold mb-4">Empowering Choices</h1>
+                                <p class="text-white lead">.</p>
+                                <a href="#shopNow" class="btn btn-primary btn-lg mt-3">Shop Now</a>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="carousel-item rounded">
+                        <img src='{{ url_for("static", filename="img/layout/cover-1.jpg")}}'
+                            class="d-block w-100 rounded" alt="Quality You Can Trust">
+                        <div
+                            class="carousel-caption d-flex flex-column align-items-center justify-content-center text-center">
+                            <div class="p-3 caption-content rounded bg-dark bg-opacity-50">
+                                <h1 id="animatedText1" class="display-3 text-white fw-bold mb-4">Empowering Choices</h1>
+                                <p class="text-white lead">Discover premium-quality essentials for your daily needs.</p>
+                                <a href="#shopNow" class="btn btn-primary btn-lg mt-3">Shop Now</a>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -267,69 +226,70 @@
 
 
 <div class="container-fluid pt-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title text-uppercase fw-bold">Shop by Categories</h2>
+        <p class="text-muted">Explore our curated selection of products designed to meet all your needs.</p>
+    </div>
+
     <div class="row px-xl-5 pb-3">
         <!-- Menstrual Care -->
-        <div class="col-lg-6 col-md-6 col-sm-12 pb-4">
-            <div
-                class="cat-item d-flex flex-column align-items-center text-center border rounded-lg p-4 shadow-sm hover-effect">
-                <!-- <p class="text-muted mb-2">15 Products</p> -->
-                <a href="{{ url_for('shop.home', c_=enc_dbs[1]['intimate_care']) }}"
-                    class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid rounded"
-                        src="{{ url_for('static', filename='img/oxyher/pee_safe_sanitary_pads/one_time_use/bio_degradble_night/bio_degradable_right.webp') }}"
-                        alt="bio degradable sanitary pads" style="height: 200px; object-fit: cover;">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-4">
+            <div class="cat-item text-center border rounded-lg p-4 shadow-sm position-relative">
+                <a href="{{ url_for('shop.home', c_=enc_dbs[1]['intimate_care']) }}" class="d-block">
+                    <img class="img-fluid rounded mb-3"
+                        src="{{ url_for('static', filename='img/layout/menstrual_care.jpg') }}"
+                        alt="bio degradable sanitary pads" style="height: 200px; object-fit: cover; transition: transform 0.3s;">
                 </a>
-                <h5 class="font-weight-bold m-0">Menstrual Care</h5>
+                <h5 class="fw-bold">Menstrual Care</h5>
+                <p class="text-muted small">High-quality essentials for menstrual health.</p>
+                <a href="{{ url_for('shop.home', c_=enc_dbs[1]['intimate_care']) }}" class="stretched-link"></a>
             </div>
         </div>
 
         <!-- Intimate Care -->
-        <div class="col-lg-6 col-md-6 col-sm-12 pb-4">
-            <div
-                class="cat-item d-flex flex-column align-items-center text-center border rounded-lg p-4 shadow-sm hover-effect">
-                <!-- <p class="text-muted mb-2">15 Products</p> -->
-                <a href="{{ url_for('shop.home', c_=enc_dbs[0]['inner_wears']) }}"
-                    class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid rounded"
-                        src="{{ url_for('static', filename='img/oxyher/pee_safe_sanitary_pads/reusable_pads/6/reusable_sanitary_pads_pack_side.webp') }}"
-                        alt="reusable sanitary pads" style="height: 200px; object-fit: cover;">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-4">
+            <div class="cat-item text-center border rounded-lg p-4 shadow-sm position-relative">
+                <a href="{{ url_for('shop.home', c_=enc_dbs[0]['inner_wears']) }}" class="d-block">
+                    <img class="img-fluid rounded mb-3"
+                        src="{{ url_for('static', filename='img/layout/intimate_care.jpg') }}"
+                        alt="reusable sanitary pads" style="height: 200px; object-fit: cover; transition: transform 0.3s;">
                 </a>
-                <h5 class="font-weight-bold m-0">Intimate Care</h5>
+                <h5 class="fw-bold">Intimate Care</h5>
+                <p class="text-muted small">Stay comfortable and confident every day.</p>
+                <a href="{{ url_for('shop.home', c_=enc_dbs[0]['inner_wears']) }}" class="stretched-link"></a>
             </div>
         </div>
-    </div>
 
-    <div class="row px-xl-5 pb-3">
-        <div class="col-lg-6 col-md-6 col-sm-12 pb-4">
-            <div
-                class="cat-item d-flex flex-column align-items-center text-center border rounded-lg p-4 shadow-sm hover-effect">
-                <!-- <p class="text-muted mb-2">15 Products</p> -->
-                <a href="{{ url_for('shop.home', c_=enc_dbs[3]['medicines']) }}"
-                    class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid rounded"
-                        src="{{ url_for('static', filename='img/oxyher/femi_pads/femi_pad_2.webp') }}"
-                        alt="femi sanitary pads" style="height: 200px; object-fit: cover;">
+        <!-- Personal Care -->
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-4">
+            <div class="cat-item text-center border rounded-lg p-4 shadow-sm position-relative">
+                <a href="{{ url_for('shop.home', c_=enc_dbs[3]['medicines']) }}" class="d-block">
+                    <img class="img-fluid rounded mb-3"
+                        src="{{ url_for('static', filename='img/layout/personal_care.jpg') }}"
+                        alt="femi sanitary pads" style="height: 200px; object-fit: cover; transition: transform 0.3s;">
                 </a>
-                <h5 class="font-weight-bold m-0">Personal Care</h5>
+                <h5 class="fw-bold">Personal Care</h5>
+                <p class="text-muted small">Products crafted for personal hygiene and wellness.</p>
+                <a href="{{ url_for('shop.home', c_=enc_dbs[3]['medicines']) }}" class="stretched-link"></a>
             </div>
         </div>
 
         <!-- Kids Care -->
-        <div class="col-lg-6 col-md-6 col-sm-12 pb-4">
-            <div
-                class="cat-item d-flex flex-column align-items-center text-center border rounded-lg p-4 shadow-sm hover-effect">
-                <!-- <p class="text-muted mb-2">15 Products</p> -->
-                <a href="{{ url_for('shop.home', c_=enc_dbs[2]['kids_section']) }}"
-                    class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid rounded"
-                        src="{{ url_for('static', filename='img/oxyher/cup_wash/menstrual_cup_wash_side.webp') }}"
-                        alt="menstrual cup wash" style="height: 200px; object-fit: cover;">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-4">
+            <div class="cat-item text-center border rounded-lg p-4 shadow-sm position-relative">
+                <a href="{{ url_for('shop.home', c_=enc_dbs[2]['kids_section']) }}" class="d-block">
+                    <img class="img-fluid rounded mb-3"
+                        src="{{ url_for('static', filename='img/layout/kids_care.jpg') }}"
+                        alt="menstrual cup wash" style="height: 200px; object-fit: cover; transition: transform 0.3s;">
                 </a>
-                <h5 class="font-weight-bold m-0">Kids Care</h5>
+                <h5 class="fw-bold">Kids Care</h5>
+                <p class="text-muted small">Gentle care products designed for your little ones.</p>
+                <a href="{{ url_for('shop.home', c_=enc_dbs[2]['kids_section']) }}" class="stretched-link"></a>
             </div>
         </div>
     </div>
 </div>
+
 
 
 
@@ -379,11 +339,11 @@
 
 <div class="container-fluid pt-5">
     <div class="text-center mb-4">
-        <h2 class="section-title px-5"><span class="px-2">Trendy Products</span></h2>
+        <h2 class="section-title px-5"><span class="px-2">Just arrived</span></h2>
     </div>
     <div class="row px-xl-5 pb-3">
         {% for temp_sec_1 in sec_1 %}
-        {% for product in temp_sec_1%}
+        {% for product in temp_sec_1 %}
         <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -396,16 +356,30 @@
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                     <h6 style="font-size: 15px;" class="text-truncate mb-3">{{ product['display_name']}}</h6>
                     <div class="d-flex justify-content-center">
-                        <h6 style="font-weight: 10px;font-size:15px">{{ product['price'] | int }} Rs</h6>
+                        {% if product['quantity'] == 0 %}
+                        <h6 class="text-center text-danger" style="font-weight: 10px;font-size:15px">out of stock</h6>
+                        {% else %}
+                        <h6 style="font-weight: 10px;font-size:15px">{{ product['price'] | int }} Rs <span
+                                class="fw-light">(Inc gst)</span> </h6>
                         <!-- <h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
+                        {% endif %}
+
                     </div>
                 </div>
-                <div class="card-footer d-flex justify-content-between bg-light border">
+                <div
+                    class="card-footer  {% if product['quantity'] != 0 %} d-flex justify-content-between  {% endif %} bg-light border">
+                    {% if product['quantity'] == 0 %}
+                    <p class="text-center" style="margin:0px">
+                        <small>Product currently unavaliable</small>
+                    </p>
+                    {% else %}
                     <a href="https://oxyher.com/shop/p/{{ product['product_id']}}" class="btn btn-sm text-dark p-0"><i
                             class="fas fa-eye text-primary mr-1"></i>View
                         Detail</a>
                     <a href="https://oxyher.com/shop/p/{{ product['product_id']}}" class="btn btn-sm text-dark p-0"><i
                             class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
@@ -647,16 +621,30 @@
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                     <h6 style="font-size: 15px;" class="text-truncate mb-3">{{ product['display_name']}}</h6>
                     <div class="d-flex justify-content-center">
-                        <h6 style="font-weight: 10px;font-size:15px">{{ product['price'] | int }} Rs</h6>
+                        {% if product['quantity'] == 0 %}
+                        <h6 class="text-center text-danger" style="font-weight: 10px;font-size:15px">out of stock</h6>
+                        {% else %}
+                        <h6 style="font-weight: 10px;font-size:15px">{{ product['price'] | int }} Rs <span
+                                class="fw-light">(Inc gst)</span> </h6>
                         <!-- <h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
+                        {% endif %}
+
                     </div>
                 </div>
-                <div class="card-footer d-flex justify-content-between bg-light border">
+                <div
+                    class="card-footer  {% if product['quantity'] != 0 %} d-flex justify-content-between  {% endif %} bg-light border">
+                    {% if product['quantity'] == 0 %}
+                    <p class="text-center" style="margin:0px">
+                        <small>Product currently unavaliable</small>
+                    </p>
+                    {% else %}
                     <a href="https://oxyher.com/shop/p/{{ product['product_id']}}" class="btn btn-sm text-dark p-0"><i
                             class="fas fa-eye text-primary mr-1"></i>View
                         Detail</a>
                     <a href="https://oxyher.com/shop/p/{{ product['product_id']}}" class="btn btn-sm text-dark p-0"><i
                             class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                    {% endif %}
+
                 </div>
             </div>
         </div>

@@ -1,9 +1,12 @@
-from flask import Flask, make_response, redirect, url_for, request, session
+from flask import session, render_template
 from datetime import datetime, timezone
 from .class_files import shop_class
 from .class_files import user_class
 import random, string
-from cryptography.fernet import Fernet
+import smtplib, datetime
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import json
 
 
 def add_cart(product_id, qty):
@@ -24,7 +27,7 @@ def get_products(method, p_id=None, cart=None, category=None):
     elif method == "CATEGORY":
         product = shop.get_products_using_db_func(category)
         return product
-    
+
     elif method == "CART":
         try:
             product = []
@@ -88,6 +91,14 @@ def generate_order_id(size=10, chars=string.ascii_uppercase + string.digits):
     return "".join(random.choice(chars) for _ in range(size))
 
 
+def delete_products(method, u_id):
+    if method == "CART":
+        shop = shop_class.shop()
+        shop.delete_my_cart_func(u_id)
+    else:
+        pass
+
+
 def make_new_order(auth_key):
     shop = shop_class.shop()
     cart = get_my_cart(session["auth_key"])
@@ -95,7 +106,6 @@ def make_new_order(auth_key):
     amount = 0
     current_datetime = datetime.now()
     formatted_datetime = current_datetime.strftime("%B %d, %Y, %I:%M %p")
-
     for product in products:
         amount += product["qty"] * product["price"]
     order_data = {
@@ -103,6 +113,7 @@ def make_new_order(auth_key):
         "products": cart[
             "products"
         ],  # Example: {"product_id1": quantity, "product_id2": quantity}
+        "payment_type": "PRE_PAID",
         "prices": cart[
             "prices"
         ],  # Example: {"product_id1": amount, "product_id2": amount}
@@ -111,6 +122,10 @@ def make_new_order(auth_key):
         "order_date": formatted_datetime,  # Timestamp for order
     }
     result = shop.make_order(auth_key, order_data)
+    if result["status"]:
+        user_details = get_user_details(auth_key)
+        send_order_notification()
+        delete_products("CART", u_id=auth_key)
     return result
 
 
@@ -144,7 +159,54 @@ def get_encrypted_dbs():
     shop = shop_class.shop()
     return shop.get_encrypted_dbs_func()
 
+
 def get_decrypted_dbs(key):
     shop = shop_class.shop()
     return shop.get_decrypted_dbs_func(key)
-    
+
+
+def send_order_notification(recipient_email, order_details):
+
+    # Load mail config from json.
+    current_year = datetime.datetime.now().year
+    mail_config = open("/var/www/oxyher/app/config/server/mail_server/mail.json")
+    mail = json.load(mail_config)
+
+    # SMTP server configuration
+    smtp_server = mail["MAIL_SERVER"]
+    smtp_port = mail["MAIL_PORT"]
+    sender_email = mail["MAIL_FROM"]["PRIMARY"]
+    sender_password = mail["MAIL_PASSWORD"]
+    sender_alias = mail["MAIL_FROM"]["NOTIFICATION"]
+    seller_name = "Oxyher"
+    customer_name = "Sukesh"
+    customer_email = "sukesh.1814@gmail.com"
+    customer_phone = "+91 9600944093"
+
+    subject = "Order Booking Confirmation"
+
+    # HTML template
+    html_template = render_template(
+        "themes/seller/orders/send_mail/order_email_template.html",
+        current_year=current_year,
+        seller_name=seller_name,
+        customer_name=customer_name,
+        customer_email=customer_email,
+        customer_phone=customer_phone
+    )
+    message = MIMEMultipart("alternative")
+    message["From"] = sender_alias
+    message["To"] = recipient_email
+    message["Subject"] = subject
+    message.attach(MIMEText(html_template, "html"))
+
+    # Send the email
+    try:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, recipient_email, message.as_string())
+        return {"status": True, "message": "Mail send successfully"}
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+        return {"status": False, "message": "Mail send Failed"}

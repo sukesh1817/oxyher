@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+
+
+
+
+{% block head %}
+
+<title>Orders Oxyher</title>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+	name='viewport' />
+<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+<link rel="stylesheet" href="/static/assets/css/ready.css">
+<link rel="stylesheet" href="/static/assets/css/demo.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
+	rel="stylesheet">
+<style>
+	.mt-man{
+		margin-top: 100px;
+	}
+</style>
+
+
+{% endblock %}
+
+{% block body %}
+
+<div class="wrapper">
+
+	{% include "themes/seller/common/navbar.html" %}
+	{% include "themes/seller/common/sidebar.html" %}
+
+
+
+
+
+    <div class="main-panel">
+        <div class="container mt-4">
+            <h4 style="margin-top: 60px;" class="text-center mb-4">Manage Your Orders</h4>
+            <hr>
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <div class="card shadow-lg mx-3 mb-4 border-0 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-clock-fill text-primary fs-1 mb-3"></i>
+                            <h5 class="card-title">Pending Orders</h5>
+                            <!-- <h6 class="card-subtitle mb-2 text-muted">View your orders</h6> -->
+                            <p class="card-text">Here you can view your pending orders.</p>
+                            <a href="{{ url_for('seller.show_pending_orders') }}" class="btn btn-primary w-100">Show Orders</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card shadow-lg mx-3 mb-4 border-0 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-check-circle-fill text-success fs-1 mb-3"></i>
+                            <h5 class="card-title">Completed Orders</h5>
+                            <!-- <h6 class="card-subtitle mb-2 text-muted">View your orders</h6> -->
+                            <p class="card-text">Here you can view your completed orders.</p>
+                            <a href="{{ url_for('seller.show_pending_orders') }}" class="btn btn-success w-100">Show Orders</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card shadow-lg mx-3 mb-4 border-0 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-x-circle-fill text-danger fs-1 mb-3"></i>
+                            <h5 class="card-title">Canceled Orders</h5>
+                            <!-- <h6 class="card-subtitle mb-2 text-muted">View your orders</h6> -->
+                            <p class="card-text">Here you can view your canceled orders.</p>
+                            <a href="{{ url_for('seller.show_pending_orders') }}" class="btn btn-danger w-100">Show Orders</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+		
+</div>
+
+{% endblock %}
+
+{% block tail %}
+
+<script src="/static/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="/static/assets/js/core/popper.min.js"></script>
+<script src="/static/assets/js/core/bootstrap.min.js"></script>
+<script src="/static/assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="/static/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<script src="/static/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="/static/assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="/static/assets/js/ready.min.js"></script>
+<script src="/static/assets/js/demo.js"></script>
+
+<script>
+	$(function () {
+		$("#slider").slider({
+			range: "min",
+			max: 100,
+			value: 40,
+		});
+		$("#slider-range").slider({
+			range: true,
+			min: 0,
+			max: 500,
+			values: [75, 300]
+		});
+	});
+</script>
+{% endblock %}

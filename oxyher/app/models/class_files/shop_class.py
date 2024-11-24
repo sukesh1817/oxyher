@@ -1,6 +1,6 @@
 from app import mysql as conn
 from flask import current_app, jsonify
-import random
+import random, json, requests
 from cryptography.fernet import Fernet
 
 key = Fernet.generate_key()
@@ -75,8 +75,8 @@ class shop:
         except Exception as e:
             error = {"CODE": 500, "ERROR": "UNABLE_TO_GET_PRODUCT_LIST"}
             return jsonify(error)
-        
-    def get_products_using_db_func(self,database):
+
+    def get_products_using_db_func(self, database):
         products = []  # Initialize an empty list to store products
         try:
             database = current_app.client[database]
@@ -84,9 +84,7 @@ class shop:
             for collection_name in collections:
                 collection = database[collection_name]
                 data = collection.find({})
-                for (
-                    document
-                ) in data:  # Iterate over each document in the cursor
+                for document in data:  # Iterate over each document in the cursor
                     products.append(document)
             return products
         except Exception as e:
@@ -133,6 +131,11 @@ class shop:
     def get_my_cart_func(self, u_id):
         database = current_app.client["user"]
         cart = database.cart.find_one({"_id": u_id})
+        return cart
+
+    def delete_my_cart_func(self, u_id):
+        database = current_app.client["user"]
+        cart = database.cart.delete_one({"_id": u_id})
         return cart
 
     def get_recommend_products_func(self, p_id):
@@ -185,8 +188,50 @@ class shop:
             print(f"An error occurred: {e}")
             return None
 
+    def is_valid_pincode(self,pincode):
+        # Load the configuration json file.
+        delivery_json = open("/var/www/oxyher/app/config/server/delivery/config.json")
+        delivery = json.load(delivery_json)
+        token = delivery["CREDENTIALS"]["API_TOKEN"]
+        url = (
+            delivery["PIN_CODES"]["PRODUCTION_URL"]
+            + f"?token={token}&filter_codes={pincode}"
+        )
+
+        # Define the headers for the request
+        headers = {
+            "Content-Type": "application/json",
+        }
+
+        try:
+            # Make the GET request using requests library
+            response = requests.get(url, headers=headers)
+            pin_codes = response.json()  # Use response.json() to parse the JSON
+            # Check if the response was successful
+            if response.status_code == 200:
+                # print("HEY")
+                return {"status": True, "data": pin_codes}
+            else:
+                return {"status": False, "error": "something went wrong"}
+        except requests.exceptions.RequestException as e:
+            # Handle any errors during the request
+            print("UNEXPEDTED ERROR DURING FETCHING PINCODE AVALIABILITY : ", e)
+            return {"status": False, "error": e}
+
     def make_order(self, user_id, order_data):
         try:
+            # Get the user_data.
+            self.cursor.execute(
+                "SELECT * FROM user_details WHERE username = %s;",
+                (user_id,),
+            )
+            user_data = self.cursor.fetchall()
+            pincode = self.is_valid_pincode(user_data[0][6])
+            # Raise error if the pincode is not deliverable.
+            if not(pincode["status"] and pincode['data']['delivery_codes']):
+                raise Exception("PINCODE_NOT_DELIVERABLE")
+
+            # Select database and collections and update or create the new orders.
             database = current_app.client["user"]
             collection = database["orders"]
             existing_user = collection.find_one({"_id": user_id})
@@ -195,15 +240,10 @@ class shop:
                     {"_id": user_id}, {"$push": {"orders": order_data}}
                 )
                 if result.modified_count > 0:
-                    return True
+                    return {"status": True, "message": "success"}
                 else:
-                    return False
+                    return {"status": False, "error": "document not modified"}
             else:
-                self.cursor.execute(
-                    "SELECT * FROM user_details WHERE username = %s;",
-                    (user_id,),
-                )
-                user_data = self.cursor.fetchall()
                 user_details = {
                     "name": user_data[0][1],
                     "address": user_data[0][4],
@@ -217,10 +257,10 @@ class shop:
                     "orders": [order_data],
                 }
                 collection.insert_one(new_user_data)
-                return True
+                return {"status": True, "message": "success"}
 
         except Exception as e:
-            return False
+            return {"status": False, "error": "error in order making | "+ str(e)}
 
     def get_random_products_func(self, db):
         # This function helps to get random products from the database.

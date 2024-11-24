@@ -12,7 +12,9 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/template/status.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/template/status_tail.php';
 
-  } else if($_POST['code'] == 'PAYMENT_SUCCESS') {
+  } 
+  // else if($_POST['code'] == 'PAYMENT_SUCCESS') {
+  else if($_POST['code'] == 'PAYMENT_SUCCESS' || $_GET['code'] == "T") {
     require_once $_SERVER['DOCUMENT_ROOT'] . '/template/status_head.php';
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/config/functions/make_redirection.php';
@@ -111,22 +113,25 @@
       <p class="message">Please wait while we take you to the next page in <span id="countdown" class="countdown">5</span>
         seconds.</p>
     </div>
+
     <script>
       // Countdown Timer and Redirection
       let countdown = 5;
       function updateCountdown() {
         document.getElementById('countdown').textContent = countdown;
         if (countdown > 0) {
+         
           countdown--;
         } else {
           window.location.href = "<?php echo $url; ?>";
         }
       }
       setInterval(updateCountdown, 1000);
-      require_once $_SERVER['DOCUMENT_ROOT'] . '/template/status_tail.php';
-
-
+      </script>
+      
+      
     <?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/template/status_tail.php';
   } else {
     header("Content-Type: application/json");
     echo json_encode(["Response" => "Request is invalid"]);

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 30px auto;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #444;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #222;
+            font-size: 20px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .details p {
+            margin: 5px 0;
+        }
+
+        .order-details {
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+            padding: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            padding: 12px 10px;
+            text-align: left;
+        }
+
+        table th {
+            background: rgb(255, 111, 145);
+            color: #fff;
+            font-weight: bold;
+            border-radius: 1px;
+        }
+
+        table tr:nth-child(even) {
+            background: #f4f4f4;
+        }
+
+        table tr:hover {
+            background: #eaeaea;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+        .btn-custom {
+            text-decoration: none;
+            background-color: rgb(255, 111, 145); /* Button background */
+            color: #fff; /* White text for contrast */
+            border: 1px solid rgb(230, 100, 130); /* Slightly darker border */
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        
+        .btn-custom:hover {
+            background-color: rgb(230, 100, 130); /* Darker shade on hover */
+            color: #fff;
+            border-color: rgb(200, 90, 120);
+        }
+        
+    </style>
+    <title>New order found </title>
+</head>
+<body>
+    <div class="container">
+        <h1>📦 New Order Found</h1>
+        <p>Dear <strong>{{ seller_name }}</strong>,</p>
+        <p>A new order has been successfully placed. Below are the details:</p>
+        
+        <div class="details">
+            <h2 class="section-title">Customer Details</h2>
+            <p><strong>Name:</strong> {{ customer_name }}</p>
+            <p><strong>Email:</strong> {{ customer_email }}</p>
+            <p><strong>Phone:</strong> {{ customer_phone }}</p>
+        </div>
+
+        <h2 class="section-title">Order Details</h2>
+        <div class="order-details">
+            <table>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+                <tr>
+                    <td>Product 1</td>
+                    <td>2</td>
+                    <td>$40.00</td>
+                </tr>
+                <tr>
+                    <td>Product 2</td>
+                    <td>1</td>
+                    <td>$20.00</td>
+                </tr>
+            </table>
+        </div>
+
+        <p style="text-align: center;">
+             <a class="btn-custom" style="color: white;"  href="https://oxyher.com/seller/orders/p?o_id=123">Full order info</a>
+             </p>
+
+        <div class="footer">
+            <p>&copy; {{ current_year }} <strong>Oxyher</strong>. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

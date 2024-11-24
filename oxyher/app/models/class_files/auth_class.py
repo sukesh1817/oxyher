@@ -107,9 +107,9 @@ class authentication:
 
             data = self.cursor.fetchall()
             if auth_key in data[0]:
-                return True
+                return "SUCCESS",True
             else:
-                return False
+                return "UNEXPECTED_ERROR",False
         except OperationalError as e:
             print(f"Database error during signup: {e}")
             return "UNEXPECTED_ERROR",False

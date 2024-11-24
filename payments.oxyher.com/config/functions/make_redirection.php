@@ -13,14 +13,13 @@ function make_the_redirection($amount)
     $payload = [
         'origin' => 'https://payments.oxyher.com',  // The origin (to match in Flask)
         'exp' => time() + 300,            // Set expiration time (e.g., )
-        'amt' => $amount
     ];
 
     // Encode the JWT with the private key
     $jwt = JWT::encode($payload, $privateKey, 'RS256');
 
     // Print or pass the JWT in the query string to Flask
-    $php_subdomain_url = "https://test.oxyher.com/shop/order/make";
+    $php_subdomain_url = "https://oxyher.com/shop/order/make";
     $redirect_url = $php_subdomain_url . "?_sign=" . $jwt;
     return $redirect_url;
 }

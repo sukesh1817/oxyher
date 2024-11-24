@@ -1,2 +1,4 @@
 <?php
-echo "Working";
+header("application/json");
+echo json_encode(["Status" => "Error"]);
+?>

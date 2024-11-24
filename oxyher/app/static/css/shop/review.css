@@ -27,7 +27,7 @@
 - Dark blue: hsl(223, 47%, 23%) */
 }
 
-body {
+#rev_ {
     font-size: var(--font-size);
     background-image: url(/static/img/layout/pattern-background-mobile.svg);
     display: flex;
@@ -38,7 +38,7 @@ body {
     background-repeat: no-repeat;
 }
 
-.container {
+.container_man {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -50,7 +50,7 @@ body {
 }
 
 @media (min-width: 375px) {
-    body {
+    #rev_ {
         font-size: var(--font-size);
         background: url(/static/img/layout/pattern-background-desktop.svg);
         display: flex;
@@ -60,7 +60,7 @@ body {
         background-repeat: no-repeat;
     }
 
-    .container {
+    .container_man {
         border: 0;
         display: flex;
         flex-direction: column;

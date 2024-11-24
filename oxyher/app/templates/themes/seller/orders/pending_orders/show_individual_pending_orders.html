@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Order Details - {{ order_id }}</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
+    name="viewport" />
+<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+<link rel="stylesheet" href="/static/assets/css/ready.css">
+<link rel="stylesheet" href="/static/assets/css/demo.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
+    rel="stylesheet">
+<style>
+    .order-detail-card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-summary-header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .order-summary-content {
+        padding: 20px;
+    }
+
+    .order-summary-footer {
+        background-color: #f1f1f1;
+        padding: 15px;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+
+    .icon {
+        margin-right: 5px;
+    }
+
+    .order-status {
+        font-weight: bold;
+    }
+
+    #imageModal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+    }
+
+    #modalImg {
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: rgb(254, 254, 254);
+        cursor: pointer;
+        border: none;
+        border-radius: 50%;
+        /* Circular shape */
+        width: 50px;
+        /* Width of the button */
+        height: 50px;
+        /* Height of the button */
+        display: flex;
+        /* Centering text */
+        align-items: center;
+        /* Centering text vertically */
+        justify-content: center;
+        /* Centering text horizontally */
+    }
+
+    .no-scroll {
+        overflow: hidden;
+        height: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="wrapper">
+    {% include "themes/seller/common/navbar.html" %}
+    {% include "themes/seller/common/sidebar.html" %}
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <h4 class="page-title mb-4">Order Details</h4>
+                <div class="order-detail-card card shadow-sm">
+                    <div class="card-body">
+
+                        <div class="order-summary-header p-4 rounded bg-light shadow-sm mb-4">
+                            <h5 class="mb-2 text-dark">
+                                <i class="bi bi-receipt me-2"></i> Order ID: <span class="text-dark">#{{ order_id
+                                    }}</span>
+                            </h5>
+                            <p class="text-muted mb-2 ms-1">
+                                <i class="bi bi-calendar3 me-1"></i> Placed on: {{ order_date }}
+                            </p>
+
+                            <p class="order-status mt-3">
+                                <span class="badge bg-info text-white" data-bs-toggle="tooltip"
+                                    title="Order is pending confirmation">
+                                    <i class="bi bi-clock me-1"></i> Pending
+                                </span>
+                            </p>
+                        </div>
+
+
+                        <div class="card shadow-sm px-4 py-4 rounded bg-light-subtle mb-4">
+                            <div class="card-body">
+                                <h5 class="text-dark mb-4">
+                                    <i class="la la-user-circle me-2"></i> User Information
+                                </h5>
+                                <div class="d-flex flex-column gap-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="la la-user text-dark me-2 fs-5"></i>
+                                        <span><strong>Name:</strong> {{ user_details.name }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <i class="la la-envelope text-dark me-2 fs-5"></i>
+                                        <span><strong>Email:</strong> {{ user_details.email }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <i class="la la-phone text-dark me-2 fs-5"></i>
+                                        <span><strong>Phone:</strong> {{ user_details.mobile }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <i class="la la-map-marker text-dark me-2 fs-5"></i>
+                                        <span><strong>Address:</strong> {{ user_details.address }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <i class="la la-map-pin text-dark me-2 fs-5"></i>
+                                        <span><strong>Pincode:</strong> {{ user_details.pincode }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="order-products mb-4">
+                            <h6 class="text-dark mb-3">Ordered Products list</h6>
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Product name</th>
+                                        <th>Image of product</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product, qty in products.items() %}
+                                    {% set price = prices[product] %}
+                                    {% set name = product_info[product][0]['display_name'] %}
+                                    {% set img_url = product_info[product][0]['img_url'][0] %}
+                                    <tr>
+                                        <td>{{ name }}</td>
+                                        <td>
+                                            <img style="width: 150px; height: 150px; cursor: zoom-in;" alt="{{ name }}"
+                                                class="thumbnail rounded border shadow-sm"
+                                                src="https://img.oxyher.com/{{ img_url }}">
+                                        </td>
+                                        <td>{{ qty }}</td>
+                                        <td>{{ price | int }} (Inc Gst) ₹</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr class="table-active">
+                                        <td colspan="3" class="text-end">
+                                            <p class="mb-0">
+                                                <strong>Total Amount: </strong>
+                                            </p>
+                                        </td>
+                                        <td class="text-dark fw-bold align-middle">
+                                            <span style="font-size: 15px;"
+                                                class="badge bg-dark text-white p-2 shadow-sm">{{ total_amount | int }}
+                                                ₹</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        <div class="order-summary-footer mt-4">
+                            <a href="{{ url_for('seller.show_pending_orders') }}?id_={{ order_id}}"
+                                class="btn btn-outline-dark btn-lg">
+                                <i class="la la-arrow-left icon"></i> Back to Orders
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="imageModal">
+    <span class="close">× </span>
+    <img id="modalImg" src="" alt="Large Product Image">
+</div>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <div class="toast-container">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+            <div class="toast-body">
+                {{ message }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block tail %}
+<script src="/static/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="/static/assets/js/core/popper.min.js"></script>
+<script src="/static/assets/js/core/bootstrap.min.js"></script>
+<script src="/static/assets/js/ready.min.js"></script>
+<script>
+    const toast = setTimeout(hide, 3000);
+    function hide() {
+        let t = document.getElementById("message")
+        t.style.display = 'none';
+    }
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // When the image is clicked
+        $('.thumbnail').click(function () {
+            $("#navbar_seller").hide()
+            // Get the source of the clicked image
+            var imgSrc = $(this).attr('src');
+            // Set the source of the modal image
+            $('#modalImg').attr('src', imgSrc);
+            // Show the modal
+            $('#imageModal').css('display', 'flex');
+            // Add no-scroll class to body
+            $('body').addClass('no-scroll');
+        });
+
+        // When the close button is clicked
+        $('.close').click(function () {
+            $('#imageModal').hide();
+            // Remove no-scroll class from body
+            $('body').removeClass('no-scroll');
+        });
+
+        // When the modal is clicked (to close)
+        $('#imageModal').click(function () {
+            $(this).hide();
+            $("#navbar_seller").show()
+            // Remove no-scroll class from body
+            $('body').removeClass('no-scroll');
+        });
+    });
+</script>
+</script>
+{% endblock %}

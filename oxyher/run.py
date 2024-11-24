@@ -3,4 +3,4 @@ app = create_app()
 
 
 if __name__=="__main__":
-    app.run(debug=True, use_debugger=False, port=1000)
+    app.run(debug=True, use_debugger=False,use_reloader=True, port=1000)

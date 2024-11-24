@@ -1,0 +1,26 @@
+{
+    "CREDENTIALS": {
+        "API_TOKEN": "c9a21fcbe340c942cc29f49af37e58b4d3eb5771",
+        "TEST_API_TOKEN" : "0368e03c66b1fc26848d7d4bed4798c45de2b3cf"
+    },
+    "PIN_CODES": {
+        "TESTING_URL": "https://staging-express.delhivery.com/c/api/pin-codes/json/",
+        "PRODUCTION_URL": "https://track.delhivery.com/c/api/pin-codes/json/"
+    },
+    "SHIPMENT_CREATION" :{
+        "TESTING_URL":"https://staging-express.delhivery.com/api/cmu/create.json",
+        "PRODUCTION_URL":"https://track.delhivery.com/api/cmu/create.json"
+    },
+    "SHIPMENT_EDIT" :{
+        "TESTING_URL":"https://staging-express.delhivery.com/api/p/edit",
+        "PRODUCTION_URL":"https://track.delhivery.com/api/p/edit"
+    },
+    "CALCULATE_SHIPPMET_COST":{
+        "TESTING_URL":"https://staging-express.delhivery.com/api/kinko/v1/invoice/charges/.json?parameter",
+        "PRODUCTION_URL":"https://track.delhivery.com/api/kinko/v1/invoice/charges/.json?parameter"
+    },
+    "WAY_BILL": {
+        "TESTING_URL": "https://staging-express.delhivery.com/waybill/api/bulk/json/",
+        "PRODUCTION_URL": "https://track.delhivery.com/waybill/api/bulk/json/"
+    }
+}

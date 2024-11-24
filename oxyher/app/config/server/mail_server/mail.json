@@ -1,0 +1,10 @@
+{
+    "MAIL_SERVER": "smtp.hostinger.com",
+    "MAIL_PORT": 587,
+    "MAIL_PASSWORD":"Prim@ry#357",
+    "MAIL_FROM": {
+        "PRIMARY": "primary@oxyher.com",
+        "NOTIFICATION": "notification@oxyher.com",
+        "OXYHER_GMAIL": "oxyher.official@gmail.com"
+    }
+}

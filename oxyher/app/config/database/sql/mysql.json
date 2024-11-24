@@ -2,5 +2,5 @@
     "MYSQL_HOST":"localhost",
     "USERNAME":"oxyher",
     "PASSWORD":"oxyher@123",
-    "DATABASE":"oxyher"
+    "DATABASE_1":"oxyher"
 }

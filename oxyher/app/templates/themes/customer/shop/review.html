@@ -4,12 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order review</title>
-
+<link href='{{ url_for("static", filename="css/style.css")}}' rel="stylesheet">
 <link href='{{ url_for("static", filename="css/shop/review.css")}}' rel="stylesheet">
+
 {% endblock %}
 
 {% block body%}
-<div class="container">
+{% include 'themes/customer/common/navbar.html' %}
+
+<div id="rev_" class="container_man">
     <div class="image">
         <img src='{{ url_for("static", filename="img/layout/success.svg")}}' alt="Illustration Hero">
     </div>
@@ -23,7 +26,7 @@
                 <img src='{{ url_for("static", filename="img/layout/checkout.png")}}' alt="Image Icon">
                 <div >
                     <ul class="lst2">
-                        <li>Oxyher pads</li>
+                        <li>Oxyher </li>
                         <li>Rs 150</li>
                     </ul>
     
@@ -34,7 +37,7 @@
                 <img src='{{ url_for("static", filename="img/layout/checkout.png")}}' alt="Image Icon">
                 <div >
                     <ul class="lst2">
-                        <li>Oxyher pads</li>
+                        <li>Oxyher </li>
                         <li>Rs 150</li>
                     </ul>
     

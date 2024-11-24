@@ -36,7 +36,7 @@
             </div>
         </div>
         <ul class="nav flex-column">
-            <li class="nav-item {% if request.path == '/seller/home' %} active {% endif %}">
+            <li class="nav-item {% if  'Analytics' == request.path %} active {% endif %}">
                 <a class="nav-link" href="{{ url_for('seller.home') }}">
                     <i class="la la-area-chart"></i>
                     Analytics
@@ -50,35 +50,35 @@
                     <span class="badge badge-count">14</span>
                 </a>
             </li>
-            <li class="nav-item {% if request.path == '/seller/payments' %} active {% endif %}">
+            <li class="nav-item {% if  'payments' in request.path %} active {% endif %}">
                 <a class="nav-link" href="{{ url_for('seller.payments') }}">
                     <i class="las la-money-bill"></i>
                     Payments
                     <span class="badge badge-count">50</span>
                 </a>
             </li>
-            <li class="nav-item {% if request.path == '/seller/orders' %} active {% endif %}">
+            <li class="nav-item {% if  'orders' in request.path %} active {% endif %}">
                 <a class="nav-link" href="{{ url_for('seller.orders') }}">
                     <i class="las la-clipboard-list"></i>
                     Orders
                     <span class="badge badge-count">6</span>
                 </a>
             </li>
-            <li class="nav-item {% if request.path == '/seller/notifications' %} active {% endif %}">
+            <li class="nav-item {% if  'notifications' in request.path %} active {% endif %}">
                 <a class="nav-link" href="{{ url_for('seller.notifications') }}">
                     <i class="la la-bell"></i>
                     Notifications
                     <span class="badge badge-success">3</span>
                 </a>
             </li>
-            <li class="nav-item {% if request.path == '/seller/marketing' %} active {% endif %}">
+            <li class="nav-item {% if  'marketing' in request.path %} active {% endif %}">
                 <a class="nav-link" href="{{ url_for('seller.marketing') }}">
                     <i class="las la-bullhorn"></i>
                     Marketing
                     <span class="badge badge-danger">25</span>
                 </a>
             </li>
-            <li class="nav-item {% if request.path == '/seller/accounts' %} active {% endif %}">
+            <li class="nav-item {% if 'accounts' in request.path %} active {% endif %}">
                 <a class="nav-link" href="{{ url_for('seller.accounts') }}">
                     <i class="las la-user"></i>
                     Accounts
